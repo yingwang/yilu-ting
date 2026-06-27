@@ -1,4 +1,5 @@
 export type PoiCategory =
+  | "railway"
   | "old town"
   | "cathedral"
   | "river"
@@ -7,6 +8,10 @@ export type PoiCategory =
   | "castle"
   | "vineyard"
   | "city walk"
+  | "market"
+  | "garden"
+  | "shopping"
+  | "museum"
   | "museum/exterior";
 
 export type Destination = {

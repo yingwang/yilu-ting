@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
 import { PoiCard } from "@/components/PoiCard";
 import { destinations, getDestinationBySlug, getPoisByDestination } from "@/data/pois";
+import { getDestinationGuideCopy } from "@/data/spotGuide";
 
 export function generateStaticParams() {
   return destinations.map((destination) => ({ slug: destination.slug }));
@@ -21,6 +22,7 @@ export default async function DestinationPage({
   }
 
   const destinationPois = getPoisByDestination(destination.slug);
+  const guideCopy = getDestinationGuideCopy(destination.slug);
 
   return (
     <div className="px-5 pb-10 pt-6 sm:px-8">
@@ -61,6 +63,17 @@ export default async function DestinationPage({
         <p className="whitespace-pre-line text-base leading-9 text-ink/75">
           {destination.guideScript}
         </p>
+
+        {guideCopy?.length ? (
+          <div className="space-y-4 border-t border-ink/10 pt-5">
+            <h3 className="text-base font-semibold text-ink">导游补充</h3>
+            {guideCopy.map((paragraph) => (
+              <p key={paragraph} className="text-base leading-9 text-ink/75">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <div className="mt-7 px-1">

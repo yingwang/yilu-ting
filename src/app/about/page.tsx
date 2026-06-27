@@ -8,7 +8,7 @@ export default function AboutPage() {
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">About</p>
         <h1 className="mt-3 text-3xl font-semibold text-ink">关于一路听</h1>
         <p className="mt-4 text-base leading-8 text-ink/70">
-          一路听是一个面向欧洲旅行的中文语音导览 MVP。它是浏览器里的 PWA，不是原生 App；第一版只使用固定行程里的地点数据，让你在手机 Safari 或桌面浏览器里浏览目的地、阅读导览词，并播放预先生成的音频。
+          一路听是一个面向欧洲旅行的中文语音导览 MVP。它是浏览器里的 PWA，不是原生 App；第一版使用本地景点数据，让你在手机 Safari 或桌面浏览器里浏览目的地、阅读自然导游词，并播放预先生成的音频。
         </p>
       </section>
 
@@ -45,7 +45,7 @@ export default function AboutPage() {
             <h2 className="font-semibold text-ink">为这次欧洲行程定制</h2>
           </div>
           <p className="mt-3 text-sm leading-7 text-ink/65">
-            目前内置阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎四个目的地，共 21 个导览点。后续增加真实音频时，只要把 mp3 放到对应路径即可。
+            目前内置汉堡、阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎五个目的地，共 34 个导览点。内容重点是景点介绍、历史背景和现场观看感，不展示私人行程细节。
           </p>
         </div>
       </section>

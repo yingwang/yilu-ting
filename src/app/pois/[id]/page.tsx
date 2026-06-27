@@ -11,6 +11,7 @@ import {
   getPreviousPoi,
   pois
 } from "@/data/pois";
+import { getPoiGuideCopy } from "@/data/spotGuide";
 
 export function generateStaticParams() {
   return pois.map((poi) => ({ id: poi.id }));
@@ -30,6 +31,7 @@ export default async function PoiDetailPage({
   const destination = getDestinationBySlug(poi.destinationSlug);
   const previousPoi = getPreviousPoi(poi.id);
   const nextPoi = getNextPoi(poi.id);
+  const guideCopy = getPoiGuideCopy(poi.id);
   // A real map view can replace this Google Maps deep link later without changing POI data.
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${poi.latitude},${poi.longitude}`;
 
@@ -86,6 +88,19 @@ export default async function PoiDetailPage({
           <h2 className="text-lg font-semibold text-ink">中文导览词</h2>
           <p className="mt-4 whitespace-pre-line text-base leading-9 text-ink/75">{poi.script}</p>
         </section>
+
+        {guideCopy?.length ? (
+          <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
+            <h2 className="text-lg font-semibold text-ink">导游补充</h2>
+            <div className="mt-4 space-y-4">
+              {guideCopy.map((paragraph) => (
+                <p key={paragraph} className="text-base leading-9 text-ink/75">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <div className="grid gap-3 sm:grid-cols-2">
           <MarkListenedButton poiId={poi.id} />

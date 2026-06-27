@@ -59,8 +59,8 @@ function readPoiAudioJobs() {
     });
   }
 
-  if (jobs.length !== 21) {
-    throw new Error(`Expected 21 POI audio jobs, found ${jobs.length}.`);
+  if (jobs.length === 0) {
+    throw new Error("No POI audio jobs found.");
   }
 
   return jobs;
@@ -82,8 +82,8 @@ function readDestinationAudioJobs() {
     });
   }
 
-  if (jobs.length !== 4) {
-    throw new Error(`Expected 4 destination audio jobs, found ${jobs.length}.`);
+  if (jobs.length === 0) {
+    throw new Error("No destination audio jobs found.");
   }
 
   return jobs;

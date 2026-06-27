@@ -2,6 +2,17 @@ import type { Destination, Poi } from "./types";
 
 export const destinations: Destination[] = [
   {
+    slug: "hamburg",
+    name: "汉堡",
+    region: "Hamburg",
+    intro: "水路、仓库、桥和湖面组成的北德城市，不靠古城童话，而靠港口秩序。",
+    guideScript:
+      "汉堡这一站，可以先把它看成一座由水塑造出来的城市。这里的重点不只是某一座漂亮建筑，而是港口、运河、仓库、桥、铁路和商业街怎样互相连接。Speicherstadt 的红砖仓库沿着水道展开，窗洞重复，桥一座接一座，像一套曾经昼夜运转的贸易机器。Alster 则是另一种水面，它没有港口仓库的重量，更像城市客厅，让人看到汉堡日常、散步和商业的一面。看汉堡时，不需要把它想成南欧式老城，也不要只找最浪漫的角度。它真正有意思的地方，是功能和秩序留下来的美：水怎样进入城市，桥怎样组织街区，红砖怎样把贸易历史留在立面上，湖面又怎样让一座北德城市变得柔和。",
+    guideAudioUrl: "/audio/intro-hamburg.mp3",
+    guideAudioDuration: "1-2 分钟",
+    accent: "border-sky-900/15 bg-sky-50/60"
+  },
+  {
     slug: "alsace",
     name: "阿尔萨斯",
     region: "Alsace",
@@ -48,6 +59,46 @@ export const destinations: Destination[] = [
 ];
 
 export const pois: Poi[] = [
+  {
+    id: "hamburg-speicherstadt",
+    destinationSlug: "hamburg",
+    destination: "汉堡",
+    region: "Hamburg",
+    title: "Speicherstadt",
+    subtitle: "红砖仓库、水道和桥组成的贸易城市记忆",
+    locationName: "Speicherstadt, Hamburg",
+    latitude: 53.5433,
+    longitude: 9.9969,
+    category: "city walk",
+    recommendedVisitDuration: "45-75 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位现在看到的 Speicherstadt，是汉堡最能说明城市性格的一片地方。它不是一组单纯为了好看的红砖建筑，而是一套曾经服务港口贸易的仓库系统。请大家站在桥上看一看，水道从仓库之间穿过，红砖立面一排排展开，窗洞和墙面反复重复，像一台被时间保留下来的城市机器。这里的美，首先来自功能。货物从船上进入水道，再靠近仓库，桥把街块连起来，建筑不用过多装饰，却有非常清楚的秩序感。到了夜晚，灯光会让这里显得浪漫；但白天更能看懂它为什么这样长成。Speicherstadt 讲的不是童话，而是汉堡作为贸易城市的记忆：水、货物、桥、仓库和商业网络，曾经在这里紧密咬合。",
+    summary: "从桥上看红砖仓库和水道，理解汉堡的贸易城市性格。",
+    audioUrl: "/audio/hamburg-speicherstadt.mp3",
+    tags: ["红砖仓库", "水道", "港口城市"],
+    nextPoiId: "hamburg-alster"
+  },
+  {
+    id: "hamburg-alster",
+    destinationSlug: "hamburg",
+    destination: "汉堡",
+    region: "Hamburg",
+    title: "Alster",
+    subtitle: "湖面、桥和商业街之间的汉堡日常",
+    locationName: "Binnenalster / Außenalster, Hamburg",
+    latitude: 53.5555,
+    longitude: 9.9946,
+    category: "lake",
+    recommendedVisitDuration: "35-70 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "如果说 Speicherstadt 展示的是汉堡的贸易记忆，那么 Alster 展示的就是这座城市柔软、日常的一面。各位可以把视线放远一点，看湖面怎样把建筑、桥、树和商业街拉开。这里没有港口仓库的重量，也没有大型纪念碑的压迫感，更多的是散步的人、湖边的风、咖啡馆和城市中心难得的开阔。汉堡是一座很依赖水的城市，但水在不同地方有不同表情。在港口和仓库区，水意味着运输、贸易和效率；到了 Alster，水变成城市客厅，给人停留和回头看的空间。站在湖边看街道，你会发现汉堡并不只是北德的商业城市，它也有很安静、很适合慢慢走的一面。",
+    summary: "从湖边看汉堡如何把水面变成城市客厅。",
+    audioUrl: "/audio/hamburg-alster.mp3",
+    tags: ["湖面", "城市日常", "散步"],
+    nextPoiId: "alsace-petite-france"
+  },
   {
     id: "alsace-petite-france",
     destinationSlug: "alsace",
@@ -126,6 +177,26 @@ export const pois: Poi[] = [
     summary: "在桥上看水道两侧的彩色房子和花箱。",
     audioUrl: "/audio/alsace-colmar-little-venice.mp3",
     tags: ["水道", "彩色房子", "桥"],
+    nextPoiId: "alsace-colmar-marche-couvert"
+  },
+  {
+    id: "alsace-colmar-marche-couvert",
+    destinationSlug: "alsace",
+    destination: "阿尔萨斯",
+    region: "Alsace",
+    title: "Marché Couvert de Colmar",
+    subtitle: "把彩色老城拉回烟火气的室内市场",
+    locationName: "Marché Couvert de Colmar",
+    latitude: 48.0748,
+    longitude: 7.3593,
+    category: "market",
+    recommendedVisitDuration: "25-45 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位从小威尼斯走到科尔马室内市场，会发现老城忽然从明信片回到了烟火气里。这里没有大教堂那种高度，也没有水道照片里的梦幻感，但它很重要，因为一座小城真正的生活，往往就藏在市场里。请大家留意摊位上的奶酪、熟食、面包、蔬果和本地小吃，也听一听人们点单、交谈和找零钱的声音。阿尔萨斯的颜色不只在外墙上，也在餐桌上。木筋屋和水道告诉我们这座城市长什么样，市场则告诉我们这里的人怎样吃、怎样停留、怎样把地方风味过成日常。看完彩色房子之后，如果能在这里坐下吃一点东西，科尔马就不会只是漂亮，而会变得有温度。",
+    summary: "从市场摊位和本地食物看科尔马的日常生活。",
+    audioUrl: "/audio/alsace-colmar-marche-couvert.mp3",
+    tags: ["市场", "本地食物", "烟火气"],
     nextPoiId: "alsace-colmar-old-town"
   },
   {
@@ -246,6 +317,46 @@ export const pois: Poi[] = [
     summary: "从齿轨火车和山顶看湖、村庄与山脊的关系。",
     audioUrl: "/audio/interlaken-brienzer-rothorn.mp3",
     tags: ["山顶", "齿轨火车", "全景"],
+    nextPoiId: "interlaken-kleine-scheidegg"
+  },
+  {
+    id: "interlaken-kleine-scheidegg",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Kleine Scheidegg",
+    subtitle: "站到艾格峰北壁面前，看高山从背景变成正面",
+    locationName: "Kleine Scheidegg",
+    latitude: 46.585,
+    longitude: 7.961,
+    category: "mountain",
+    recommendedVisitDuration: "90-150 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位来到 Kleine Scheidegg，眼前最重要的不是一张风景照，而是高山尺度本身。这里位在格林德瓦和劳特布伦嫩之间，是齿轨铁路交会的高山垭口。请大家先不要急着辨认所有山名，而是把视线放到艾格峰北壁上。照片会把岩壁压平，现场才知道那面山为什么会给人这么强的压迫感。然后再看红色齿轨火车、草甸、旅馆和铁轨，它们把原本不可亲近的高山，变成一个可以抵达、可以停留、可以慢慢观看的地方。Kleine Scheidegg 的动人之处，就在自然的巨大和人的尺度同时出现。山非常近，人非常小，但铁路和房子告诉你，人并没有从这片风景里消失。",
+    summary: "从齿轨铁路、草甸和艾格峰北壁理解伯尔尼高地的高山尺度。",
+    audioUrl: "/audio/interlaken-kleine-scheidegg.mp3",
+    tags: ["艾格峰", "齿轨铁路", "高山垭口"],
+    nextPoiId: "interlaken-wengen-railway"
+  },
+  {
+    id: "interlaken-wengen-railway",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Wengen Railway Village",
+    subtitle: "无车山村、木屋和铁路节奏",
+    locationName: "Wengen",
+    latitude: 46.6056,
+    longitude: 7.9201,
+    category: "old town",
+    recommendedVisitDuration: "45-75 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "温根和山顶景观不一样，它把伯尔尼高地从雪山的压迫感带回到人的尺度。这里是无车山村，火车不只是交通工具，也决定了村庄的声音和节奏。各位可以先听一听周围，普通汽车的噪音少了，脚步声、远处火车声、露台上的人声就会变得更明显。木屋、阳台、草坡和远山同时出现在视线里，让这里不像一个单纯的观景点，而像人真正住在高山边缘。瑞士山地旅行最有意思的地方之一，就是自然并没有把生活完全排出去。相反，铁路、木屋和村道把生活轻轻放进山里，让巨大的风景有了可以亲近的边缘。",
+    summary: "从无车村和铁路看高山生活如何回到人的尺度。",
+    audioUrl: "/audio/interlaken-wengen-railway.mp3",
+    tags: ["无车村", "铁路", "木屋"],
     nextPoiId: "interlaken-lauterbrunnen"
   },
   {
@@ -266,6 +377,26 @@ export const pois: Poi[] = [
     summary: "从村中看瀑布、峭壁、草地和教堂的垂直关系。",
     audioUrl: "/audio/interlaken-lauterbrunnen.mp3",
     tags: ["山谷", "瀑布", "木屋"],
+    nextPoiId: "interlaken-blausee"
+  },
+  {
+    id: "interlaken-blausee",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Blausee",
+    subtitle: "森林里一小片清蓝的水",
+    locationName: "Blausee",
+    latitude: 46.5338,
+    longitude: 7.6663,
+    category: "lake",
+    recommendedVisitDuration: "45-75 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "布劳湖和前面的高山大景不一样。它小，清，藏在森林里，不靠开阔全景取胜，而是靠近距离的水色、水底和树影打动人。各位到了湖边，可以先把视线放低。看水底的沉木、石头和鱼，看树影怎样落在水面上，也看木栈道怎样绕着这片蓝色慢慢展开。它像把瑞士山水压缩进一个清澈的小玻璃盒里，没有太多声音，也没有宏大的远景，却很容易让人安静下来。很多瑞士景点让人抬头看山，布劳湖则让人低头看水。这样的转换很珍贵，因为它提醒我们，风景的震撼不一定来自巨大，也可以来自一小片水被看得足够近、足够清楚。",
+    summary: "从水底沉木、鱼和树影看一处低处、近距离的瑞士蓝湖。",
+    audioUrl: "/audio/interlaken-blausee.mp3",
+    tags: ["蓝湖", "森林", "清水"],
     nextPoiId: "interlaken-oeschinensee"
   },
   {
@@ -386,6 +517,86 @@ export const pois: Poi[] = [
     summary: "从山顶回看蒙特勒湖岸、葡萄园和湖面弧线。",
     audioUrl: "/audio/montreux-rochers-de-naye.mp3",
     tags: ["山顶", "湖区全景", "远眺"],
+    nextPoiId: "paris-parc-monceau"
+  },
+  {
+    id: "paris-parc-monceau",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Parc Monceau",
+    subtitle: "老树、草地、柱廊和街区边界组成的柔和巴黎",
+    locationName: "Parc Monceau",
+    latitude: 48.8797,
+    longitude: 2.3093,
+    category: "garden",
+    recommendedVisitDuration: "35-60 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位来到蒙梭公园，会看到一个不那么宏大、却很有巴黎气质的入口。它不像杜乐丽花园那样强调中轴线和王权秩序，也不像大型博物馆那样一开始就给人很多任务。这里更多的是弯曲的小路、老树、草地、池塘、柱廊和周围安静的住宅街。请大家慢慢走，不必急着寻找一个绝对中心。蒙梭公园的好，在于它让巴黎先从生活尺度出现：有人散步，有人坐在草地边，有孩子跑过小路，树影把建筑和人群都变得柔和。它提醒我们，巴黎不只有宏伟的纪念碑，也有这种把城市放轻的空间。",
+    summary: "用公园、老树和住宅街看巴黎柔和的一面。",
+    audioUrl: "/audio/paris-parc-monceau.mp3",
+    tags: ["公园", "老树", "城市生活"],
+    nextPoiId: "paris-canal-saint-martin"
+  },
+  {
+    id: "paris-canal-saint-martin",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Canal Saint-Martin",
+    subtitle: "船闸、铁桥、树荫和水边日常",
+    locationName: "Canal Saint-Martin",
+    latitude: 48.872,
+    longitude: 2.365,
+    category: "river",
+    recommendedVisitDuration: "60-90 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "圣马丁运河展示的是另一种巴黎。它没有塞纳河那种国家历史形象，也没有卢浮宫和歌剧院的正式感，但它有船闸、铁桥、树荫、咖啡馆、小店和坐在水边的人。各位可以先看船闸，水被一段段控制，街道也跟着变慢。铁桥从水面上方跨过，树影落在河岸，年轻人坐在岸边聊天，这些都让这里显得很日常。巴黎如果只看宏大景点，会容易变成一串名字；到了运河边，城市会重新有声音、有停顿、有生活气。这里讲的是水利和街区，也讲巴黎怎样在纪念碑之外继续过日子。",
+    summary: "从船闸和水边生活看巴黎更日常的街区层次。",
+    audioUrl: "/audio/paris-canal-saint-martin.mp3",
+    tags: ["运河", "船闸", "街区生活"],
+    nextPoiId: "paris-marais-arcades"
+  },
+  {
+    id: "paris-marais-arcades",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Marais / Paris Arcades",
+    subtitle: "旧宅邸、市场和玻璃顶拱廊里的巴黎密度",
+    locationName: "Le Marais / Galerie Vivienne",
+    latitude: 48.8638,
+    longitude: 2.363,
+    category: "city walk",
+    recommendedVisitDuration: "90-150 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "玛黑区的魅力在于密度。这里有旧宅邸、门洞后的庭院、窄街、市场、小店和不断转弯的人流。请大家走的时候不要只看橱窗，也留意门洞里面有没有院落，街角的尺度怎样变化，旧墙和新招牌怎样贴在一起。再走进 Galerie Vivienne 或 Passage des Panoramas，巴黎会变成十九世纪的商业城市。玻璃顶把街道变成半室内空间，地砖、灯光和橱窗让人的脚步自然慢下来。拱廊不是雨天备选，它本身就是一种城市发明：让购物、散步、观看和社交，在有顶的光线里发生。",
+    summary: "从玛黑街区和玻璃顶拱廊看巴黎的商业与生活密度。",
+    audioUrl: "/audio/paris-marais-arcades.mp3",
+    tags: ["玛黑", "拱廊", "街区"],
+    nextPoiId: "paris-marche-aligre-coulee-verte"
+  },
+  {
+    id: "paris-marche-aligre-coulee-verte",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Marché d'Aligre / Coulée Verte",
+    subtitle: "市场声音和旧铁路绿道里的日常巴黎",
+    locationName: "Marché d'Aligre / Coulée Verte René-Dumont",
+    latitude: 48.8495,
+    longitude: 2.3784,
+    category: "market",
+    recommendedVisitDuration: "75-120 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "阿利格尔市场和绿荫步道放在一起，很能说明巴黎的另一种层次。市场在地面，充满熟食摊、蔬果、二手摊、讨价还价的声音和早晨的人流；Coulée Verte 则在上方，由旧铁路空间改造成绿道。一个让你听见城市，一个让你从稍高处看见城市。各位在市场里可以先感受声音和气味，不必急着总结它有什么名物。走到绿道上以后，视角会变，窗户、街道、树冠和城市背面从栏杆之间出现。它们都不是传统意义上的大景点，却很能说明巴黎不是只靠纪念碑生活的城市。",
+    summary: "从市场和高架绿道看巴黎普通但很有层次的日常空间。",
+    audioUrl: "/audio/paris-marche-aligre-coulee-verte.mp3",
+    tags: ["市场", "绿道", "日常巴黎"],
     nextPoiId: "paris-palais-garnier"
   },
   {
@@ -426,6 +637,46 @@ export const pois: Poi[] = [
     summary: "在统一立面和中央圆柱之间感受广场的秩序感。",
     audioUrl: "/audio/paris-place-vendome.mp3",
     tags: ["广场", "珠宝", "秩序"],
+    nextPoiId: "paris-giverny-monet"
+  },
+  {
+    id: "paris-giverny-monet",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris / Normandy",
+    title: "Giverny / Monet's Garden",
+    subtitle: "莫奈把居住、园艺、水面和绘画连在一起的地方",
+    locationName: "Fondation Claude Monet, Giverny",
+    latitude: 49.0754,
+    longitude: 1.5339,
+    category: "garden",
+    recommendedVisitDuration: "90-150 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位来到吉维尼，看到的不只是莫奈画作的背景，而是一位画家长期组织视觉经验的现场。莫奈在这里生活多年，花园、故居、睡莲池、日式桥和水面反光，逐渐成为他晚年绘画的重要来源。请大家不要只寻找那座最有名的桥，也看植物怎样遮挡和打开视线，水面怎样把天空、树影和花色混在一起。这里的特别之处，是居住、园艺和绘画没有分开。花园不是自然随便长成的，它被不断选择、种植、修剪、观看，最后又被带进画布。站在睡莲池边，你看到的是一个人如何把日常生活变成艺术方法，也看到印象派为什么如此在意光、水、空气和瞬间。",
+    summary: "从花园、水面和植物层次理解莫奈晚年绘画的现场来源。",
+    audioUrl: "/audio/paris-giverny-monet.mp3",
+    tags: ["莫奈", "花园", "印象派"],
+    nextPoiId: "paris-bon-marche-rodin"
+  },
+  {
+    id: "paris-bon-marche-rodin",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Le Bon Marché / Rodin Garden",
+    subtitle: "左岸消费美学和安静雕塑庭院",
+    locationName: "Le Bon Marché / Musée Rodin",
+    latitude: 48.8519,
+    longitude: 2.325,
+    category: "shopping",
+    recommendedVisitDuration: "90-150 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "左岸这一组地点很有意思，因为它把两种巴黎审美放在一起。Le Bon Marché 和 La Grande Épicerie 讲的是陈列、消费、食品、香氛和材料；罗丹花园讲的是雕塑、树影、砾石路、草坪和安静的庭院。各位在百货和食品馆里，可以看看商品怎样被当成视觉对象来安排，颜色、包装、灯光和动线都很讲究。到了罗丹美术馆花园，速度要放慢。铜像不是孤零零摆在那里，它们和树、建筑立面、草坪、天空一起组成观看关系。一个明亮，一个安静；一个是现代消费，一个是艺术沉思。它们都属于巴黎，只是用不同方式说明这座城市如何把生活做成审美。",
+    summary: "从左岸百货陈列和罗丹花园看巴黎不同层次的审美生活。",
+    audioUrl: "/audio/paris-bon-marche-rodin.mp3",
+    tags: ["左岸", "购物", "罗丹"],
     nextPoiId: "paris-tuileries-louvre"
   },
   {
@@ -446,6 +697,26 @@ export const pois: Poi[] = [
     summary: "从树列、砂石路和卢浮宫外墙看巴黎的大空间。",
     audioUrl: "/audio/paris-tuileries-louvre.mp3",
     tags: ["花园", "卢浮宫", "城市轴线"],
+    nextPoiId: "paris-louvre-night"
+  },
+  {
+    id: "paris-louvre-night",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Louvre Night",
+    subtitle: "夜色里的宫殿、玻璃金字塔和世界级收藏",
+    locationName: "Musée du Louvre",
+    latitude: 48.8606,
+    longitude: 2.3376,
+    category: "museum",
+    recommendedVisitDuration: "120-180 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "各位来到夜晚的卢浮宫，请先不要急着把它想成一张必看作品清单。卢浮宫首先是一座由王宫转化而来的博物馆，入口广场、玻璃金字塔、长长的宫殿外墙、楼梯和长廊，本身就在讲法国权力、收藏和公共文化的故事。夜色下来以后，玻璃金字塔会变得更明亮，宫殿外墙也更有层次，人流从广场进入地下，再被带到不同展厅，这个过程本身就很有戏剧性。作品当然重要，蒙娜丽莎、维纳斯和胜利女神都值得看，但如果只追名字，就会错过这座建筑的第一层震撼。请大家在移动时也看空间：门洞、天花、楼梯、人群和灯光怎样共同构成一座世界博物馆。",
+    summary: "从宫殿空间、玻璃金字塔和夜场氛围理解卢浮宫。",
+    audioUrl: "/audio/paris-louvre-night.mp3",
+    tags: ["卢浮宫", "夜场", "博物馆"],
     nextPoiId: "paris-saint-germain"
   },
   {
