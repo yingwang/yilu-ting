@@ -1,0 +1,17 @@
+{
+  "name": "一路听",
+  "short_name": "一路听",
+  "description": "你的中文旅行语音导览",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f7f2ea",
+  "theme_color": "#526459",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
