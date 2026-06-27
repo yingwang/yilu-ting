@@ -1,12 +1,13 @@
 import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, rm, stat, writeFile } from "node:fs/promises";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
 const root = process.cwd();
 const dataPath = join(root, "src/data/pois.ts");
 const guidePath = join(root, "src/data/spotGuide.ts");
+const louvreGuidePath = join(root, "src/data/louvreGuide.ts");
 const voice = process.env.YILU_TTS_VOICE || "zh-CN-XiaoxiaoNeural";
 const rate = process.env.YILU_TTS_RATE || "-8%";
 const force = process.argv.includes("--force");
@@ -236,6 +237,52 @@ function readDestinationAudioJobs() {
   return jobs;
 }
 
+function readLouvreTitles(source) {
+  const titles = new Map();
+  const entryPattern = /{\s*id:\s*"([^"]+)"[\s\S]*?title:\s*"([^"]+)"/g;
+
+  for (const match of source.matchAll(entryPattern)) {
+    const [, id, title] = match;
+    titles.set(id, title);
+  }
+
+  return titles;
+}
+
+function readLouvreAudioJobs() {
+  if (!existsSync(louvreGuidePath)) {
+    return [];
+  }
+
+  const source = readFileSync(louvreGuidePath, "utf8");
+  const destinations = parseStringArrayRecord(
+    extractRecordBody(source, "louvreDestinationGuideCopy")
+  );
+  const pois = parseStringArrayRecord(extractRecordBody(source, "louvrePoiGuideCopy"));
+  const titles = readLouvreTitles(source);
+  const jobs = [];
+
+  for (const [slug, script] of destinations.entries()) {
+    jobs.push({
+      id: `intro-${slug}`,
+      title: slug === "louvre" ? "卢浮宫整体介绍" : `${slug}介绍`,
+      script,
+      output: join(root, "public", "audio", `intro-${slug}.mp3`)
+    });
+  }
+
+  for (const [id, script] of pois.entries()) {
+    jobs.push({
+      id,
+      title: titles.get(id) || id,
+      script,
+      output: join(root, "public", "audio", `${id}.mp3`)
+    });
+  }
+
+  return jobs;
+}
+
 async function synthesize(bin, job) {
   const dir = await mkdtemp(join(tmpdir(), "yilu-tts-"));
   const textPath = join(dir, `${job.id}.txt`);
@@ -276,7 +323,7 @@ async function synthesize(bin, job) {
 }
 
 const bin = await findEdgeTtsBin();
-const jobs = [...readDestinationAudioJobs(), ...readPoiAudioJobs()];
+const jobs = [...readDestinationAudioJobs(), ...readPoiAudioJobs(), ...readLouvreAudioJobs()];
 
 await mkdir(join(root, "public/audio"), { recursive: true });
 console.log(`Generating ${jobs.length} files with ${voice} at ${rate}`);

@@ -30,10 +30,10 @@ export default function AboutPage() {
             <span className="rounded-full bg-brass/15 p-2 text-brass">
               <Map size={20} aria-hidden="true" />
             </span>
-            <h2 className="font-semibold text-ink">先不做复杂地图</h2>
+            <h2 className="font-semibold text-ink">地图按场景逐步加</h2>
           </div>
           <p className="mt-3 text-sm leading-7 text-ink/65">
-            第一版只提供经纬度和 Google Maps 打开按钮。更完整的地图、离线包和音频合集都可以以后再加，先把内容、播放和进度体验做顺。
+            城市景点页保留 Google Maps 打开按钮；卢浮宫模块单独加入简化馆内地图，按三翼、楼层和重点展品组织信息，并链接官方 PDF 与互动地图。
           </p>
         </div>
 
