@@ -33,7 +33,7 @@ export default function AboutPage() {
             <h2 className="font-semibold text-ink">地图按场景逐步加</h2>
           </div>
           <p className="mt-3 text-sm leading-7 text-ink/65">
-            城市景点页保留 Google Maps 打开按钮；卢浮宫模块单独加入简化馆内地图，按三翼、楼层和重点展品组织信息，并链接官方 PDF 与互动地图。
+            城市景点页保留 Google Maps 打开按钮；卢浮宫专题放在巴黎下面，使用应用内简化互动地图，按三翼、楼层和重点展品组织信息。
           </p>
         </div>
 

@@ -33,6 +33,18 @@ export type LouvreWorkSeed = {
   themes: string[];
 };
 
+export type LouvreMapPin = {
+  id: string;
+  itemId: string;
+  label: string;
+  shortLabel: string;
+  wing: LouvreWingId;
+  level: string;
+  roomHint?: string;
+  x: number;
+  y: number;
+};
+
 export const louvreOfficialSources = [
   {
     label: "卢浮宫官方地图 PDF",
@@ -124,6 +136,152 @@ export const louvreMapZones: LouvreMapZone[] = [
     title: "装饰艺术、拿破仑三世套房与北方绘画",
     focus: "把卢浮宫从“看名画”的地方，转成“理解宫殿生活、工艺和收藏”的地方。",
     highlights: ["拿破仑三世套房", "欧洲装饰艺术", "维米尔《花边女工》", "北方绘画", "法国早期绘画"]
+  }
+];
+
+export const louvreMapPins: LouvreMapPin[] = [
+  {
+    id: "pin-medieval-louvre",
+    itemId: "louvre-medieval-louvre",
+    label: "中世纪卢浮宫遗址",
+    shortLabel: "遗址",
+    wing: "sully",
+    level: "Level -1",
+    roomHint: "Sully 地下层",
+    x: 218,
+    y: 118
+  },
+  {
+    id: "pin-winged-victory",
+    itemId: "louvre-winged-victory",
+    label: "萨莫色雷斯胜利女神",
+    shortLabel: "胜利女神",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Daru 楼梯",
+    x: 142,
+    y: 164
+  },
+  {
+    id: "pin-mona-lisa",
+    itemId: "louvre-mona-lisa",
+    label: "蒙娜丽莎",
+    shortLabel: "蒙娜丽莎",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Salle des États",
+    x: 180,
+    y: 166
+  },
+  {
+    id: "pin-wedding-at-cana",
+    itemId: "louvre-wedding-at-cana",
+    label: "迦拿的婚礼",
+    shortLabel: "迦拿",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Salle des États",
+    x: 200,
+    y: 154
+  },
+  {
+    id: "pin-liberty",
+    itemId: "louvre-liberty-leading-the-people",
+    label: "自由引导人民",
+    shortLabel: "自由",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "法国十九世纪绘画区",
+    x: 104,
+    y: 170
+  },
+  {
+    id: "pin-raft",
+    itemId: "louvre-raft-of-the-medusa",
+    label: "美杜莎之筏",
+    shortLabel: "美杜莎",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "法国十九世纪绘画区",
+    x: 78,
+    y: 168
+  },
+  {
+    id: "pin-apollon",
+    itemId: "louvre-galerie-apollon",
+    label: "阿波罗长廊",
+    shortLabel: "阿波罗",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Denon / Sully 连接区域",
+    x: 226,
+    y: 140
+  },
+  {
+    id: "pin-venus",
+    itemId: "louvre-venus-de-milo",
+    label: "米洛的维纳斯",
+    shortLabel: "维纳斯",
+    wing: "sully",
+    level: "Level 0",
+    roomHint: "古希腊雕塑区",
+    x: 270,
+    y: 144
+  },
+  {
+    id: "pin-scribe",
+    itemId: "louvre-seated-scribe",
+    label: "书记坐像",
+    shortLabel: "书记",
+    wing: "sully",
+    level: "Level 1",
+    roomHint: "古埃及展区",
+    x: 292,
+    y: 112
+  },
+  {
+    id: "pin-sphinx",
+    itemId: "louvre-sphinx-of-tanis",
+    label: "塔尼斯狮身人面像",
+    shortLabel: "狮身",
+    wing: "sully",
+    level: "Level 0",
+    roomHint: "古埃及展区",
+    x: 292,
+    y: 136
+  },
+  {
+    id: "pin-hammurabi",
+    itemId: "louvre-code-of-hammurabi",
+    label: "汉谟拉比法典",
+    shortLabel: "法典",
+    wing: "richelieu",
+    level: "Level 0",
+    roomHint: "近东文明展区",
+    x: 92,
+    y: 98
+  },
+  {
+    id: "pin-napoleon-iii",
+    itemId: "louvre-napoleon-iii-apartments",
+    label: "拿破仑三世套房",
+    shortLabel: "套房",
+    wing: "richelieu",
+    level: "Level 1",
+    roomHint: "Richelieu 宫殿空间",
+    x: 218,
+    y: 70
+  },
+  {
+    id: "pin-lacemaker",
+    itemId: "louvre-lacemaker",
+    label: "花边女工",
+    shortLabel: "花边",
+    wing: "richelieu",
+    level: "Level 2",
+    roomHint: "北方绘画区",
+    x: 154,
+    y: 66
   }
 ];
 

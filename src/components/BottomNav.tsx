@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Compass, Home, Info, ListChecks, Map } from "lucide-react";
+import { Compass, Home, Info, ListChecks } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "首页", icon: Home },
-  { href: "/louvre", label: "卢浮宫", icon: Map },
   { href: "/progress", label: "进度", icon: ListChecks },
   { href: "/about", label: "关于", icon: Info }
 ];
@@ -16,7 +15,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-3xl border-t border-ink/10 bg-paper/95 px-4 pb-[calc(0.6rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur">
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = item.href === "/" ? pathname === item.href : pathname.startsWith(item.href);

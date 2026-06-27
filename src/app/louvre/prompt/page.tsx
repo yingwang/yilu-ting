@@ -70,7 +70,7 @@ export default function LouvrePromptPage() {
   return (
     <div className="px-5 pb-10 pt-6 sm:px-8">
       <Link
-        href="/louvre"
+        href="/destinations/paris/louvre"
         className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-sm font-medium text-ink/65 ring-1 ring-ink/10"
       >
         <ArrowLeft size={16} aria-hidden="true" />

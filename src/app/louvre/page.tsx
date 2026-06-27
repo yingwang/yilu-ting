@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, ExternalLink, Map, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowRight, PlayCircle, Sparkles } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
+import { LouvreInteractiveMap } from "@/components/LouvreInteractiveMap";
 import {
   louvreCurationChapters,
-  louvreMapZones,
-  louvreOfficialSources,
   louvreWings,
   louvreWorkSeeds
 } from "@/data/louvre";
@@ -38,23 +37,14 @@ export default function LouvrePage() {
           已导入第一批 {louvreGuidePois.length} 个展区 / 展品解说。
         </p>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <div className="mt-5">
           <Link
-            href="/louvre/prompt"
+            href="/destinations/paris/louvre/prompt"
             className="inline-flex items-center justify-center gap-2 rounded-[0.5rem] bg-ink px-4 py-3 text-sm font-semibold text-white"
           >
             复制 ChatGPT 生成 Prompt
             <ArrowRight size={17} aria-hidden="true" />
           </Link>
-          <a
-            href={louvreOfficialSources[0].href}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-[0.5rem] bg-white px-4 py-3 text-sm font-semibold text-ink ring-1 ring-ink/10"
-          >
-            打开官方地图 PDF
-            <ExternalLink size={17} aria-hidden="true" />
-          </a>
         </div>
       </section>
 
@@ -92,6 +82,10 @@ export default function LouvrePage() {
         </section>
       ) : null}
 
+      <div className="mt-7">
+        <LouvreInteractiveMap basePath="/destinations/paris/louvre" />
+      </div>
+
       <section className="mt-7">
         <h2 className="px-1 text-xl font-semibold text-ink">第一批解说</h2>
         <p className="mt-1 px-1 text-sm text-ink/55">
@@ -101,7 +95,7 @@ export default function LouvrePage() {
           {louvreGuidePois.map((item) => (
             <Link
               key={item.id}
-              href={`/louvre/items/${item.id}`}
+              href={`/destinations/paris/louvre/items/${item.id}`}
               className="rounded-[0.5rem] border border-ink/10 bg-white/70 p-4 shadow-sm transition hover:bg-white"
             >
               <div className="flex items-start justify-between gap-3">
@@ -122,43 +116,6 @@ export default function LouvrePage() {
                 ))}
               </div>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-7">
-        <div className="mb-4 flex items-center gap-2 px-1">
-          <Map size={20} className="text-moss" aria-hidden="true" />
-          <h2 className="text-xl font-semibold text-ink">简化导览地图</h2>
-        </div>
-
-        <div className="space-y-4">
-          {louvreMapZones.map((zone) => (
-            <article
-              key={`${zone.wing}-${zone.level}-${zone.roomRange}`}
-              className={`rounded-[0.5rem] border p-5 shadow-sm ${wingStyle[zone.wing]}`}
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-white/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-ink/55">
-                  {wingLabel[zone.wing]} · {zone.level}
-                </span>
-                <span className="rounded-full bg-white/55 px-3 py-1 text-xs text-ink/50">
-                  Rooms {zone.roomRange}
-                </span>
-              </div>
-              <h3 className="mt-3 text-lg font-semibold text-ink">{zone.title}</h3>
-              <p className="mt-2 text-sm leading-7 text-ink/65">{zone.focus}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {zone.highlights.map((highlight) => (
-                  <span
-                    key={highlight}
-                    className="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-ink/60 ring-1 ring-ink/5"
-                  >
-                    {highlight}
-                  </span>
-                ))}
-              </div>
-            </article>
           ))}
         </div>
       </section>
@@ -231,23 +188,6 @@ export default function LouvrePage() {
         </div>
       </section>
 
-      <section className="mt-7 rounded-[0.5rem] border border-ink/10 bg-white/65 p-5">
-        <h2 className="text-lg font-semibold text-ink">资料源</h2>
-        <div className="mt-3 grid gap-2">
-          {louvreOfficialSources.map((source) => (
-            <a
-              key={source.href}
-              href={source.href}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-between gap-3 rounded-[0.5rem] bg-white/70 px-3 py-2 text-sm text-ink/65 ring-1 ring-ink/10"
-            >
-              {source.label}
-              <ExternalLink size={15} aria-hidden="true" />
-            </a>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

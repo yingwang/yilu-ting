@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, Map } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
 import { PoiCard } from "@/components/PoiCard";
 import { destinations, getDestinationBySlug, getPoisByDestination } from "@/data/pois";
@@ -68,6 +68,32 @@ export default async function DestinationPage({
           ))}
         </div>
       </section>
+
+      {destination.slug === "paris" ? (
+        <section className="mt-6 rounded-[0.5rem] border border-brass/25 bg-white/75 p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="rounded-full bg-brass/15 p-2 text-brass">
+              <Map size={20} aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brass">
+                Paris museum guide
+              </p>
+              <h2 className="mt-2 text-xl font-semibold text-ink">卢浮宫专题导览</h2>
+              <p className="mt-2 text-sm leading-7 text-ink/65">
+                放在巴黎下面的馆内专题：包含三翼示意地图、重点展品圆点和已生成的中文语音解说。
+              </p>
+              <Link
+                href="/destinations/paris/louvre"
+                className="mt-4 inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-4 py-2.5 text-sm font-semibold text-white"
+              >
+                打开卢浮宫地图
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <div className="mt-7 px-1">
         <h2 className="text-xl font-semibold text-ink">继续听景点</h2>
