@@ -23,43 +23,39 @@ const wingShapes: Array<{
   wing: LouvreWingId;
   itemId: string;
   label: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  d: string;
+  labelX: number;
+  labelY: number;
   fill: string;
   stroke: string;
 }> = [
   {
     wing: "richelieu",
     itemId: "louvre-richelieu-wing",
-    label: "Richelieu",
-    x: 36,
-    y: 36,
-    width: 288,
-    height: 56,
+    label: "Richelieu 翼",
+    d: "M34 34 H322 Q330 34 330 42 V94 Q330 102 322 102 H260 V132 H210 V102 H42 Q34 102 34 94 Z",
+    labelX: 176,
+    labelY: 68,
     fill: "#efe2c4",
     stroke: "#c69b5b"
   },
   {
     wing: "sully",
     itemId: "louvre-sully-wing",
-    label: "Sully",
-    x: 242,
-    y: 92,
-    width: 82,
-    height: 92,
+    label: "Sully 翼",
+    d: "M244 96 H326 Q334 96 334 104 V184 Q334 192 326 192 H250 Q242 192 242 184 V158 H214 V130 H242 V104 Q242 96 244 96 Z",
+    labelX: 292,
+    labelY: 146,
     fill: "#dde6df",
     stroke: "#526459"
   },
   {
     wing: "denon",
     itemId: "louvre-denon-wing",
-    label: "Denon",
-    x: 36,
-    y: 184,
-    width: 288,
-    height: 56,
+    label: "Denon 翼",
+    d: "M42 178 H210 V148 H260 V178 H322 Q330 178 330 186 V238 Q330 246 322 246 H34 V186 Q34 178 42 178 Z",
+    labelX: 176,
+    labelY: 214,
     fill: "#ead6d2",
     stroke: "#8f4b45"
   }
@@ -69,6 +65,13 @@ const wingColor: Record<LouvreWingId, string> = {
   denon: "#8f4b45",
   sully: "#526459",
   richelieu: "#c69b5b"
+};
+
+const levelLabel: Record<string, string> = {
+  "Level -1": "-1",
+  "Level 0": "0",
+  "Level 1": "1",
+  "Level 2": "2"
 };
 
 export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
@@ -97,13 +100,14 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
     selection.type === "wing" ? louvreMapZones.filter((zone) => zone.wing === selection.wing) : [];
 
   const selectedItemHref = selectedItem ? `${basePath}/items/${selectedItem.id}` : undefined;
+  const showPinLabels = activeLevel !== "全部";
 
   return (
     <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-moss">
-            In-app interactive map
+            Louvre map
           </p>
           <h2 className="mt-2 text-xl font-semibold text-ink">卢浮宫互动地图</h2>
         </div>
@@ -124,19 +128,43 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
       </div>
 
       <p className="mt-3 text-sm leading-7 text-ink/60">
-        这是应用内简化示意图，用来帮助理解三翼和重点展品的相对关系。点三翼区域或圆点查看说明，再进入对应语音导览。
+        点选三翼或作品圆点，查看所在区域和语音导览。筛选楼层后会显示更多展品标签。
       </p>
 
-      <div className="mt-5 overflow-hidden rounded-[0.5rem] border border-ink/10 bg-paper">
-        <svg viewBox="0 0 360 276" role="img" aria-label="卢浮宫三翼互动示意图" className="h-auto w-full">
-          <rect x="0" y="0" width="360" height="276" fill="#f7f2ea" />
-          <rect x="92" y="94" width="152" height="88" rx="12" fill="#fffaf0" stroke="#d8c8ad" />
-          <text x="168" y="124" textAnchor="middle" className="fill-ink text-[10px] font-semibold">
+      <div className="mt-5 overflow-hidden rounded-[0.75rem] border border-ink/10 bg-[#f6efe3] shadow-inner">
+        <svg viewBox="0 0 360 292" role="img" aria-label="卢浮宫三翼互动示意图" className="h-auto w-full">
+          <defs>
+            <pattern id="louvre-grid" width="18" height="18" patternUnits="userSpaceOnUse">
+              <path d="M18 0H0V18" fill="none" stroke="#e3d7c5" strokeWidth="0.55" />
+            </pattern>
+            <filter id="map-shadow" x="-10%" y="-10%" width="120%" height="130%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#1f2933" floodOpacity="0.12" />
+            </filter>
+          </defs>
+
+          <rect x="0" y="0" width="360" height="292" fill="#f7f2ea" />
+          <rect x="0" y="0" width="360" height="292" fill="url(#louvre-grid)" opacity="0.55" />
+
+          <path d="M0 260 C70 242 136 270 207 252 C268 236 309 242 360 224 V292 H0 Z" fill="#d9e5e8" />
+          <path d="M0 260 C70 242 136 270 207 252 C268 236 309 242 360 224" fill="none" stroke="#8fa0a8" strokeWidth="1.2" />
+          <text x="296" y="266" className="fill-ink/45 text-[9px] font-medium">
+            Seine
+          </text>
+
+          <rect x="88" y="106" width="148" height="70" rx="14" fill="#fff7ea" stroke="#d9c7aa" strokeWidth="1.2" />
+          <rect x="104" y="118" width="116" height="46" rx="10" fill="#f7f2ea" stroke="#e0d2bd" strokeDasharray="3 3" />
+          <text x="162" y="134" textAnchor="middle" className="fill-ink text-[10px] font-semibold">
             Cour Napoléon
           </text>
-          <polygon points="168,136 188,170 148,170" fill="#d8e0e4" stroke="#8fa0a8" />
-          <text x="168" y="198" textAnchor="middle" className="fill-ink/50 text-[9px]">
-            金字塔入口
+          <polygon points="162,142 184,164 140,164" fill="#d8e0e4" stroke="#7c8d96" strokeWidth="1.1" />
+          <path d="M162 142 L162 164 M151 153 H173" stroke="#aab8bf" strokeWidth="0.8" />
+          <text x="162" y="174" textAnchor="middle" className="fill-ink/50 text-[8px]">
+            Pyramid Entrance
+          </text>
+
+          <rect x="242" y="114" width="70" height="48" rx="10" fill="#fffaf0" stroke="#d9c7aa" strokeWidth="1" />
+          <text x="277" y="142" textAnchor="middle" className="fill-ink/45 text-[8px]">
+            Cour Carrée
           </text>
 
           {wingShapes.map((shape) => {
@@ -157,22 +185,20 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
                   }
                 }}
                 className="cursor-pointer outline-none"
+                filter="url(#map-shadow)"
               >
-                <rect
-                  x={shape.x}
-                  y={shape.y}
-                  width={shape.width}
-                  height={shape.height}
-                  rx="12"
+                <path
+                  d={shape.d}
                   fill={shape.fill}
                   stroke={isActive ? "#1f2933" : shape.stroke}
-                  strokeWidth={isActive ? 3 : 1.5}
+                  strokeWidth={isActive ? 3 : 1.4}
                 />
+                <path d={shape.d} fill="none" stroke="#ffffff" strokeOpacity="0.45" strokeWidth="4" />
                 <text
-                  x={shape.x + shape.width / 2}
-                  y={shape.y + shape.height / 2 + 4}
+                  x={shape.labelX}
+                  y={shape.labelY}
                   textAnchor="middle"
-                  className="pointer-events-none fill-ink text-[13px] font-semibold"
+                  className="pointer-events-none fill-ink text-[12px] font-semibold"
                 >
                   {shape.label}
                 </text>
@@ -180,8 +206,14 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
             );
           })}
 
+          <path d="M74 102 V178 M286 102 V178 M76 178 H286 M76 102 H286" fill="none" stroke="#cdbb9d" strokeWidth="0.8" strokeDasharray="4 5" />
+          <text x="36" y="270" className="fill-ink/45 text-[8px]">
+            示意图：三翼相对位置与重点展品点位
+          </text>
+
           {visiblePins.map((pin) => {
             const isActive = selection.type === "pin" && selection.pinId === pin.id;
+            const labelIsVisible = showPinLabels || isActive;
             return (
               <g
                 key={pin.id}
@@ -197,25 +229,58 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
                 }}
                 className="cursor-pointer outline-none"
               >
+                {labelIsVisible ? (
+                  <g>
+                    <rect
+                      x={pin.x - 19}
+                      y={pin.y - 24}
+                      width="38"
+                      height="13"
+                      rx="6.5"
+                      fill="#fffaf0"
+                      stroke="#dcc9ac"
+                    />
+                    <text
+                      x={pin.x}
+                      y={pin.y - 15}
+                      textAnchor="middle"
+                      className="pointer-events-none fill-ink text-[7px] font-semibold"
+                    >
+                      {pin.shortLabel}
+                    </text>
+                  </g>
+                ) : null}
                 <circle
                   cx={pin.x}
                   cy={pin.y}
-                  r={isActive ? 8 : 6}
-                  fill={wingColor[pin.wing]}
-                  stroke="#fff"
-                  strokeWidth="2"
+                  r={isActive ? 9 : 6.5}
+                  fill="#ffffff"
+                  stroke={wingColor[pin.wing]}
+                  strokeWidth={isActive ? 4 : 2.5}
                 />
+                <circle cx={pin.x} cy={pin.y} r={3} fill={wingColor[pin.wing]} />
                 <text
                   x={pin.x}
-                  y={pin.y - 10}
+                  y={pin.y + 2.7}
                   textAnchor="middle"
-                  className="pointer-events-none fill-ink text-[8px] font-semibold"
+                  className="pointer-events-none fill-white text-[5px] font-bold"
                 >
-                  {pin.shortLabel}
+                  {levelLabel[pin.level] ?? ""}
                 </text>
               </g>
             );
           })}
+
+          <g transform="translate(22 116)">
+            <rect width="70" height="54" rx="10" fill="#fffaf0" stroke="#ddcfba" />
+            <text x="12" y="16" className="fill-ink/55 text-[8px] font-semibold">
+              图例
+            </text>
+            <circle cx="14" cy="29" r="4" fill="#8f4b45" />
+            <text x="24" y="32" className="fill-ink/55 text-[7px]">Denon</text>
+            <circle cx="14" cy="42" r="4" fill="#526459" />
+            <text x="24" y="45" className="fill-ink/55 text-[7px]">Sully</text>
+          </g>
         </svg>
       </div>
 

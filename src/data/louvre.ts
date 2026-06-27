@@ -282,6 +282,149 @@ export const louvreMapPins: LouvreMapPin[] = [
     roomHint: "北方绘画区",
     x: 154,
     y: 66
+  },
+  {
+    id: "pin-italian-painting",
+    itemId: "louvre-italian-painting",
+    label: "意大利绘画展区",
+    shortLabel: "意画",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Denon 意大利绘画长廊",
+    x: 164,
+    y: 198
+  },
+  {
+    id: "pin-french-large-format",
+    itemId: "louvre-french-large-format-painting",
+    label: "法国大画展区",
+    shortLabel: "法画",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "Denon 法国大画厅",
+    x: 92,
+    y: 200
+  },
+  {
+    id: "pin-egyptian-antiquities",
+    itemId: "louvre-egyptian-antiquities",
+    label: "古埃及展区",
+    shortLabel: "埃及",
+    wing: "sully",
+    level: "Level 1",
+    roomHint: "Sully 古埃及展区",
+    x: 304,
+    y: 118
+  },
+  {
+    id: "pin-near-eastern-antiquities",
+    itemId: "louvre-near-eastern-antiquities",
+    label: "近东古代文物展区",
+    shortLabel: "近东",
+    wing: "richelieu",
+    level: "Level 0",
+    roomHint: "Richelieu 近东文明展区",
+    x: 72,
+    y: 82
+  },
+  {
+    id: "pin-greek-roman-antiquities",
+    itemId: "louvre-greek-roman-antiquities",
+    label: "古希腊罗马展区",
+    shortLabel: "希罗",
+    wing: "sully",
+    level: "Level 0",
+    roomHint: "Sully 古希腊罗马展区",
+    x: 260,
+    y: 162
+  },
+  {
+    id: "pin-dying-slave",
+    itemId: "louvre-dying-slave",
+    label: "垂死的奴隶",
+    shortLabel: "垂奴",
+    wing: "denon",
+    level: "Level 0",
+    roomHint: "欧洲雕塑区",
+    x: 122,
+    y: 214
+  },
+  {
+    id: "pin-rebellious-slave",
+    itemId: "louvre-rebellious-slave",
+    label: "反抗的奴隶",
+    shortLabel: "反奴",
+    wing: "denon",
+    level: "Level 0",
+    roomHint: "欧洲雕塑区",
+    x: 144,
+    y: 220
+  },
+  {
+    id: "pin-psyche-revived",
+    itemId: "louvre-psyche-revived",
+    label: "丘比特吻醒普赛克",
+    shortLabel: "普赛克",
+    wing: "denon",
+    level: "Level 0",
+    roomHint: "欧洲雕塑区",
+    x: 184,
+    y: 218
+  },
+  {
+    id: "pin-grand-odalisque",
+    itemId: "louvre-grand-odalisque",
+    label: "大宫女",
+    shortLabel: "宫女",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "法国绘画区",
+    x: 116,
+    y: 184
+  },
+  {
+    id: "pin-coronation",
+    itemId: "louvre-coronation-of-napoleon",
+    label: "拿破仑加冕",
+    shortLabel: "加冕",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "法国绘画区",
+    x: 134,
+    y: 188
+  },
+  {
+    id: "pin-horatii",
+    itemId: "louvre-oath-of-the-horatii",
+    label: "荷拉斯兄弟之誓",
+    shortLabel: "誓言",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "法国绘画区",
+    x: 154,
+    y: 184
+  },
+  {
+    id: "pin-regent-diamond",
+    itemId: "louvre-regent-diamond",
+    label: "摄政王钻石",
+    shortLabel: "钻石",
+    wing: "denon",
+    level: "Level 1",
+    roomHint: "阿波罗长廊",
+    x: 240,
+    y: 128
+  },
+  {
+    id: "pin-rubens-cycle",
+    itemId: "louvre-rubens-marie-de-medici-cycle",
+    label: "玛丽·德·美第奇组画",
+    shortLabel: "鲁本斯",
+    wing: "richelieu",
+    level: "Level 2",
+    roomHint: "北方绘画区",
+    x: 122,
+    y: 58
   }
 ];
 

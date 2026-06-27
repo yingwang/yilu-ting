@@ -63,7 +63,6 @@ YILU_TTS_VOICE=zh-CN-YunxiNeural YILU_TTS_RATE=-5% npm run generate:audio -- --f
 - Supabase：当前进度逻辑都在 `src/lib/progress.ts`，以后要做跨设备同步时，把 localStorage 换成 Supabase 读写即可，组件不用跟着大改。
 - Stripe：第一版不做付费；以后如果要卖离线音频包或完整导览合集，可以在 POI 详情页的音频下载、离线包入口附近加 Stripe gating。
 - 地图：城市景点页提供 Google Maps 跳转链接；卢浮宫专题使用应用内简化互动地图，不依赖外部地图跳转。官方地图和房间开放状态会变化，导入展品数据时应保留 `lastVerified` 和 `locationNote`。
-- 现场播放：当前不做自动播放。卢浮宫内容先按地图、楼层、作品手动点播；以后如要做现场模式，再评估用户授权、浏览器音频限制和室内定位问题。
 
 ## 依赖审计
 

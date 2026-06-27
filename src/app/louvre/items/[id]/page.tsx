@@ -2,10 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
-import { getLouvreGuideCopy, getLouvreGuideItemById, louvreGuidePois } from "@/data/louvreGuide";
+import { allLouvreGuidePois, getLouvreGuideCopy, getLouvreGuideItemById } from "@/data/louvreGuide";
 
 export function generateStaticParams() {
-  return louvreGuidePois.map((item) => ({ id: item.id }));
+  return allLouvreGuidePois.map((item) => ({ id: item.id }));
 }
 
 export default async function LouvreGuideItemPage({

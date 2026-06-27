@@ -1,3 +1,5 @@
+import { louvreGuidePoisExtra, louvrePoiGuideCopyExtra } from "./louvreGuideExtra";
+
 export type LouvreGuideKind = "展区" | "展品" | "空间";
 
 export type LouvreGuideItem = {
@@ -265,10 +267,20 @@ export const louvreGuidePois: LouvreGuideItem[] = [
   }
 ];
 
+export const allLouvreGuidePois: LouvreGuideItem[] = [
+  ...louvreGuidePois,
+  ...louvreGuidePoisExtra
+];
+
+export const allLouvrePoiGuideCopy: Record<string, string[]> = {
+  ...louvrePoiGuideCopy,
+  ...louvrePoiGuideCopyExtra
+};
+
 export function getLouvreGuideItemById(id: string) {
-  return louvreGuidePois.find((item) => item.id === id);
+  return allLouvreGuidePois.find((item) => item.id === id);
 }
 
 export function getLouvreGuideCopy(id: string) {
-  return louvrePoiGuideCopy[id];
+  return allLouvrePoiGuideCopy[id];
 }

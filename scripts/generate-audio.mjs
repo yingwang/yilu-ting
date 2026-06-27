@@ -8,6 +8,7 @@ const root = process.cwd();
 const dataPath = join(root, "src/data/pois.ts");
 const guidePath = join(root, "src/data/spotGuide.ts");
 const louvreGuidePath = join(root, "src/data/louvreGuide.ts");
+const louvreGuideExtraPath = join(root, "src/data/louvreGuideExtra.ts");
 const voice = process.env.YILU_TTS_VOICE || "zh-CN-XiaoxiaoNeural";
 const rate = process.env.YILU_TTS_RATE || "-8%";
 const force = process.argv.includes("--force");
@@ -249,35 +250,59 @@ function readLouvreTitles(source) {
   return titles;
 }
 
+function tryParseStringArrayRecord(source, exportName) {
+  try {
+    return parseStringArrayRecord(extractRecordBody(source, exportName));
+  } catch (error) {
+    if (String(error.message || error).includes(`Could not find ${exportName}`)) {
+      return new Map();
+    }
+    throw error;
+  }
+}
+
 function readLouvreAudioJobs() {
-  if (!existsSync(louvreGuidePath)) {
-    return [];
-  }
-
-  const source = readFileSync(louvreGuidePath, "utf8");
-  const destinations = parseStringArrayRecord(
-    extractRecordBody(source, "louvreDestinationGuideCopy")
-  );
-  const pois = parseStringArrayRecord(extractRecordBody(source, "louvrePoiGuideCopy"));
-  const titles = readLouvreTitles(source);
   const jobs = [];
+  const sources = [
+    {
+      path: louvreGuidePath,
+      destinationExport: "louvreDestinationGuideCopy",
+      poiExport: "louvrePoiGuideCopy"
+    },
+    {
+      path: louvreGuideExtraPath,
+      destinationExport: "louvreDestinationGuideCopyExtra",
+      poiExport: "louvrePoiGuideCopyExtra"
+    }
+  ];
 
-  for (const [slug, script] of destinations.entries()) {
-    jobs.push({
-      id: `intro-${slug}`,
-      title: slug === "louvre" ? "卢浮宫整体介绍" : `${slug}介绍`,
-      script,
-      output: join(root, "public", "audio", `intro-${slug}.mp3`)
-    });
-  }
+  for (const sourceConfig of sources) {
+    if (!existsSync(sourceConfig.path)) {
+      continue;
+    }
 
-  for (const [id, script] of pois.entries()) {
-    jobs.push({
-      id,
-      title: titles.get(id) || id,
-      script,
-      output: join(root, "public", "audio", `${id}.mp3`)
-    });
+    const source = readFileSync(sourceConfig.path, "utf8");
+    const destinations = tryParseStringArrayRecord(source, sourceConfig.destinationExport);
+    const pois = tryParseStringArrayRecord(source, sourceConfig.poiExport);
+    const titles = readLouvreTitles(source);
+
+    for (const [slug, script] of destinations.entries()) {
+      jobs.push({
+        id: `intro-${slug}`,
+        title: slug === "louvre" ? "卢浮宫整体介绍" : `${slug}介绍`,
+        script,
+        output: join(root, "public", "audio", `intro-${slug}.mp3`)
+      });
+    }
+
+    for (const [id, script] of pois.entries()) {
+      jobs.push({
+        id,
+        title: titles.get(id) || id,
+        script,
+        output: join(root, "public", "audio", `${id}.mp3`)
+      });
+    }
   }
 
   return jobs;
