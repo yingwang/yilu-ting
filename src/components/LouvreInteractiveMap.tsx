@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { louvreMapPins, louvreMapZones, louvreWings, type LouvreWingId } from "@/data/louvre";
+import {
+  louvreMapHalls,
+  louvreMapPins,
+  louvreMapZones,
+  louvreWings,
+  type LouvreWingId
+} from "@/data/louvre";
 import { getLouvreGuideItemById } from "@/data/louvreGuide";
 
 type Selection =
@@ -15,6 +21,10 @@ type Selection =
   | {
       type: "pin";
       pinId: string;
+    }
+  | {
+      type: "hall";
+      hallId: string;
     };
 
 const levels = ["全部", "Level -1", "Level 0", "Level 1", "Level 2"];
@@ -67,6 +77,18 @@ const wingColor: Record<LouvreWingId, string> = {
   richelieu: "#c69b5b"
 };
 
+const wingSoftFill: Record<LouvreWingId, string> = {
+  denon: "#fff3f0",
+  sully: "#edf5ef",
+  richelieu: "#fff3d7"
+};
+
+const wingTextColor: Record<LouvreWingId, string> = {
+  denon: "#7a332f",
+  sully: "#405148",
+  richelieu: "#8f6d2f"
+};
+
 const levelLabel: Record<string, string> = {
   "Level -1": "-1",
   "Level 0": "0",
@@ -86,15 +108,35 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
     if (activeLevel === "全部") {
       return louvreMapPins;
     }
-    return louvreMapPins.filter((pin) => pin.level === activeLevel);
-  }, [activeLevel]);
+    return louvreMapPins.filter(
+      (pin) => pin.level === activeLevel || (selection.type === "pin" && selection.pinId === pin.id)
+    );
+  }, [activeLevel, selection]);
+
+  const visibleHalls = useMemo(() => {
+    if (activeLevel === "全部") {
+      return louvreMapHalls;
+    }
+    return louvreMapHalls.filter(
+      (hall) =>
+        hall.level === activeLevel || (selection.type === "hall" && selection.hallId === hall.id)
+    );
+  }, [activeLevel, selection]);
 
   const selectedPin =
     selection.type === "pin" ? louvreMapPins.find((pin) => pin.id === selection.pinId) : undefined;
+  const selectedHall =
+    selection.type === "hall"
+      ? louvreMapHalls.find((hall) => hall.id === selection.hallId)
+      : undefined;
   const selectedWing =
     selection.type === "wing" ? louvreWings.find((wing) => wing.id === selection.wing) : undefined;
   const selectedItem = getLouvreGuideItemById(
-    selection.type === "pin" ? selectedPin?.itemId ?? "" : selection.itemId
+    selection.type === "pin"
+      ? selectedPin?.itemId ?? ""
+      : selection.type === "hall"
+        ? selectedHall?.itemId ?? ""
+        : selection.itemId
   );
   const selectedWingZones =
     selection.type === "wing" ? louvreMapZones.filter((zone) => zone.wing === selection.wing) : [];
@@ -128,11 +170,11 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
       </div>
 
       <p className="mt-3 text-sm leading-7 text-ink/60">
-        点选三翼或作品圆点，查看所在区域和语音导览。筛选楼层后会显示更多展品标签。
+        点选三翼、展馆块或作品圆点，查看所在区域和语音导览。筛选楼层后会突出该层展馆与展品。
       </p>
 
       <div className="mt-5 overflow-hidden rounded-[0.75rem] border border-ink/10 bg-[#f6efe3] shadow-inner">
-        <svg viewBox="0 0 360 292" role="img" aria-label="卢浮宫三翼互动示意图" className="h-auto w-full">
+        <svg viewBox="0 0 360 318" role="img" aria-label="卢浮宫三翼互动示意图" className="h-auto w-full">
           <defs>
             <pattern id="louvre-grid" width="18" height="18" patternUnits="userSpaceOnUse">
               <path d="M18 0H0V18" fill="none" stroke="#e3d7c5" strokeWidth="0.55" />
@@ -142,12 +184,12 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
             </filter>
           </defs>
 
-          <rect x="0" y="0" width="360" height="292" fill="#f7f2ea" />
-          <rect x="0" y="0" width="360" height="292" fill="url(#louvre-grid)" opacity="0.55" />
+          <rect x="0" y="0" width="360" height="318" fill="#f7f2ea" />
+          <rect x="0" y="0" width="360" height="318" fill="url(#louvre-grid)" opacity="0.55" />
 
-          <path d="M0 260 C70 242 136 270 207 252 C268 236 309 242 360 224 V292 H0 Z" fill="#d9e5e8" />
-          <path d="M0 260 C70 242 136 270 207 252 C268 236 309 242 360 224" fill="none" stroke="#8fa0a8" strokeWidth="1.2" />
-          <text x="296" y="266" className="fill-ink/45 text-[9px] font-medium">
+          <path d="M0 286 C70 268 136 296 207 278 C268 262 309 268 360 250 V318 H0 Z" fill="#d9e5e8" />
+          <path d="M0 286 C70 268 136 296 207 278 C268 262 309 268 360 250" fill="none" stroke="#8fa0a8" strokeWidth="1.2" />
+          <text x="296" y="292" className="fill-ink/45 text-[9px] font-medium">
             Seine
           </text>
 
@@ -206,9 +248,59 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
             );
           })}
 
+          {visibleHalls.map((hall) => {
+            const isActive = selection.type === "hall" && selection.hallId === hall.id;
+            return (
+              <g
+                key={hall.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`选择 ${hall.title}`}
+                onClick={() => setSelection({ type: "hall", hallId: hall.id })}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setSelection({ type: "hall", hallId: hall.id });
+                  }
+                }}
+                className="cursor-pointer outline-none"
+              >
+                <rect
+                  x={hall.x}
+                  y={hall.y}
+                  width={hall.width}
+                  height={hall.height}
+                  rx="5"
+                  fill={wingSoftFill[hall.wing]}
+                  stroke={isActive ? "#1f2933" : wingColor[hall.wing]}
+                  strokeWidth={isActive ? 2.2 : 1}
+                  strokeDasharray={isActive ? "0" : "2 2"}
+                  opacity={isActive ? 1 : 0.88}
+                />
+                <text
+                  x={hall.x + hall.width / 2}
+                  y={hall.y + 11}
+                  textAnchor="middle"
+                  className="pointer-events-none text-[8px] font-semibold"
+                  fill={wingTextColor[hall.wing]}
+                >
+                  {hall.shortTitle}
+                </text>
+                <text
+                  x={hall.x + hall.width / 2}
+                  y={hall.y + hall.height - 5}
+                  textAnchor="middle"
+                  className="pointer-events-none fill-ink/45 text-[5.8px] font-medium"
+                >
+                  {hall.level.replace("Level ", "L")} · {hall.roomRange}
+                </text>
+              </g>
+            );
+          })}
+
           <path d="M74 102 V178 M286 102 V178 M76 178 H286 M76 102 H286" fill="none" stroke="#cdbb9d" strokeWidth="0.8" strokeDasharray="4 5" />
-          <text x="36" y="270" className="fill-ink/45 text-[8px]">
-            示意图：三翼相对位置与重点展品点位
+          <text x="36" y="292" className="fill-ink/45 text-[8px]">
+            示意图：三翼、展馆区块与重点展品点位
           </text>
 
           {visiblePins.map((pin) => {
@@ -271,8 +363,8 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
             );
           })}
 
-          <g transform="translate(22 116)">
-            <rect width="70" height="54" rx="10" fill="#fffaf0" stroke="#ddcfba" />
+          <g transform="translate(20 112)">
+            <rect width="76" height="68" rx="10" fill="#fffaf0" stroke="#ddcfba" />
             <text x="12" y="16" className="fill-ink/55 text-[8px] font-semibold">
               图例
             </text>
@@ -280,12 +372,69 @@ export function LouvreInteractiveMap({ basePath }: { basePath: string }) {
             <text x="24" y="32" className="fill-ink/55 text-[7px]">Denon</text>
             <circle cx="14" cy="42" r="4" fill="#526459" />
             <text x="24" y="45" className="fill-ink/55 text-[7px]">Sully</text>
+            <circle cx="14" cy="55" r="4" fill="#c69b5b" />
+            <text x="24" y="58" className="fill-ink/55 text-[7px]">Richelieu</text>
+          </g>
+
+          <g transform="translate(252 204)">
+            <rect width="86" height="38" rx="9" fill="#fffaf0" stroke="#ddcfba" />
+            <text x="10" y="15" className="fill-ink/55 text-[7px] font-semibold">
+              阅读方式
+            </text>
+            <rect x="10" y="22" width="17" height="8" rx="3" fill="#fff3f0" stroke="#8f4b45" strokeDasharray="2 2" />
+            <text x="32" y="29" className="fill-ink/50 text-[6.5px]">展馆 / 展区</text>
           </g>
         </svg>
       </div>
 
+      <div className="mt-4 grid gap-2 sm:grid-cols-3">
+        {louvreWings.map((wing) => (
+          <div key={wing.id} className="rounded-[0.5rem] border border-ink/10 bg-paper/70 p-3">
+            <p className="text-xs font-semibold text-ink">{wing.name}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {louvreMapHalls
+                .filter((hall) => hall.wing === wing.id)
+                .map((hall) => (
+                  <button
+                    key={hall.id}
+                    type="button"
+                    onClick={() => setSelection({ type: "hall", hallId: hall.id })}
+                    className={`rounded-full px-2 py-1 text-[11px] ring-1 ring-ink/10 ${
+                      selection.type === "hall" && selection.hallId === hall.id
+                        ? "bg-ink text-white"
+                        : "bg-white/70 text-ink/60"
+                    }`}
+                  >
+                    {hall.shortTitle}
+                  </button>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div className="mt-4 rounded-[0.5rem] border border-ink/10 bg-paper/80 p-4">
-        {selectedItem ? (
+        {selectedHall ? (
+          <>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-moss">
+              展馆 · {selectedHall.level} · Rooms {selectedHall.roomRange}
+            </p>
+            <h3 className="mt-2 text-lg font-semibold text-ink">{selectedHall.title}</h3>
+            <p className="mt-2 text-sm leading-7 text-ink/65">{selectedHall.subtitle}</p>
+            <p className="mt-3 text-xs leading-6 text-ink/45">
+              代表内容：{selectedHall.highlights.join("、")}
+            </p>
+            {selectedItemHref ? (
+              <Link
+                href={selectedItemHref}
+                className="mt-4 inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-4 py-2.5 text-sm font-semibold text-white"
+              >
+                打开解说
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            ) : null}
+          </>
+        ) : selectedItem ? (
           <>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-moss">
               {selectedItem.kind} · {selectedItem.group}

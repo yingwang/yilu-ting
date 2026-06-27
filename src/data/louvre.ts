@@ -45,6 +45,22 @@ export type LouvreMapPin = {
   y: number;
 };
 
+export type LouvreMapHall = {
+  id: string;
+  title: string;
+  shortTitle: string;
+  subtitle: string;
+  wing: LouvreWingId;
+  level: string;
+  roomRange: string;
+  itemId?: string;
+  highlights: string[];
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
 export const louvreOfficialSources = [
   {
     label: "卢浮宫官方地图 PDF",
@@ -136,6 +152,189 @@ export const louvreMapZones: LouvreMapZone[] = [
     title: "装饰艺术、拿破仑三世套房与北方绘画",
     focus: "把卢浮宫从“看名画”的地方，转成“理解宫殿生活、工艺和收藏”的地方。",
     highlights: ["拿破仑三世套房", "欧洲装饰艺术", "维米尔《花边女工》", "北方绘画", "法国早期绘画"]
+  }
+];
+
+export const louvreMapHalls: LouvreMapHall[] = [
+  {
+    id: "hall-denon-italian-painting",
+    title: "意大利绘画展区",
+    shortTitle: "意大利绘画",
+    subtitle: "文艺复兴、威尼斯画派和《蒙娜丽莎》所在的核心长廊。",
+    wing: "denon",
+    level: "Level 1",
+    roomRange: "700–718",
+    itemId: "louvre-italian-painting",
+    highlights: ["蒙娜丽莎", "迦拿的婚礼", "达·芬奇", "拉斐尔", "提香"],
+    x: 150,
+    y: 190,
+    width: 72,
+    height: 26
+  },
+  {
+    id: "hall-denon-french-large-format",
+    title: "法国大画展区",
+    shortTitle: "法国大画",
+    subtitle: "革命、帝国、灾难和政治图像集中出现的巨幅绘画空间。",
+    wing: "denon",
+    level: "Level 1",
+    roomRange: "700–703",
+    itemId: "louvre-french-large-format-painting",
+    highlights: ["自由引导人民", "美杜莎之筏", "拿破仑加冕", "荷拉斯兄弟之誓"],
+    x: 58,
+    y: 190,
+    width: 82,
+    height: 26
+  },
+  {
+    id: "hall-denon-sculpture",
+    title: "欧洲雕塑展区",
+    shortTitle: "欧洲雕塑",
+    subtitle: "米开朗基罗奴隶像、卡诺瓦与近代欧洲雕塑的身体线索。",
+    wing: "denon",
+    level: "Level 0",
+    roomRange: "400–433",
+    itemId: "louvre-dying-slave",
+    highlights: ["垂死的奴隶", "反抗的奴隶", "丘比特吻醒普赛克"],
+    x: 112,
+    y: 218,
+    width: 112,
+    height: 18
+  },
+  {
+    id: "hall-denon-apollon",
+    title: "阿波罗长廊",
+    shortTitle: "阿波罗长廊",
+    subtitle: "王冠珠宝、太阳王图像和法国宫廷装饰艺术的高光空间。",
+    wing: "denon",
+    level: "Level 1",
+    roomRange: "705",
+    itemId: "louvre-galerie-apollon",
+    highlights: ["摄政王钻石", "王冠珠宝", "法国宫廷装饰"],
+    x: 218,
+    y: 154,
+    width: 78,
+    height: 18
+  },
+  {
+    id: "hall-sully-medieval",
+    title: "中世纪卢浮宫遗址",
+    shortTitle: "中世纪遗址",
+    subtitle: "从地下城墙和塔基看卢浮宫作为防御城堡的起点。",
+    wing: "sully",
+    level: "Level -1",
+    roomRange: "900–952",
+    itemId: "louvre-medieval-louvre",
+    highlights: ["城墙", "壕沟", "主塔遗址", "堡垒到王宫"],
+    x: 214,
+    y: 108,
+    width: 58,
+    height: 21
+  },
+  {
+    id: "hall-sully-egypt",
+    title: "古埃及展区",
+    shortTitle: "古埃及",
+    subtitle: "法老、书记官、神像、墓葬与尼罗河文明的长期秩序。",
+    wing: "sully",
+    level: "Level 1",
+    roomRange: "600–663",
+    itemId: "louvre-egyptian-antiquities",
+    highlights: ["书记坐像", "塔尼斯狮身人面像", "棺木", "纸草文书"],
+    x: 278,
+    y: 108,
+    width: 42,
+    height: 42
+  },
+  {
+    id: "hall-sully-greek-roman",
+    title: "古希腊罗马展区",
+    shortTitle: "希腊罗马",
+    subtitle: "身体理想、神话、罗马肖像和欧洲古典传统的源头。",
+    wing: "sully",
+    level: "Level 0",
+    roomRange: "300–348",
+    itemId: "louvre-greek-roman-antiquities",
+    highlights: ["米洛的维纳斯", "古希腊雕塑", "罗马肖像"],
+    x: 256,
+    y: 154,
+    width: 64,
+    height: 24
+  },
+  {
+    id: "hall-richelieu-near-east",
+    title: "近东古代文物展区",
+    shortTitle: "近东文明",
+    subtitle: "两河流域、巴比伦、亚述、波斯的文字、法律和帝国图像。",
+    wing: "richelieu",
+    level: "Level 0",
+    roomRange: "200–236",
+    itemId: "louvre-near-eastern-antiquities",
+    highlights: ["汉谟拉比法典", "亚述浮雕", "苏萨弓箭手"],
+    x: 48,
+    y: 48,
+    width: 82,
+    height: 24
+  },
+  {
+    id: "hall-richelieu-sculpture",
+    title: "法国雕塑庭院",
+    shortTitle: "法国雕塑",
+    subtitle: "玻璃顶下的大型雕塑庭院，适合从光线、姿态和王权空间切入。",
+    wing: "richelieu",
+    level: "Level 0",
+    roomRange: "100–106",
+    itemId: "louvre-richelieu-wing",
+    highlights: ["马利骏马", "皮热庭院", "大型雕塑"],
+    x: 48,
+    y: 76,
+    width: 96,
+    height: 18
+  },
+  {
+    id: "hall-richelieu-northern-painting",
+    title: "北方绘画展区",
+    shortTitle: "北方绘画",
+    subtitle: "荷兰、佛兰德斯和北方绘画的细节观看与安静杰作。",
+    wing: "richelieu",
+    level: "Level 2",
+    roomRange: "800–864",
+    itemId: "louvre-lacemaker",
+    highlights: ["花边女工", "伦勃朗", "鲁本斯", "维米尔"],
+    x: 140,
+    y: 48,
+    width: 78,
+    height: 24
+  },
+  {
+    id: "hall-richelieu-napoleon-iii",
+    title: "拿破仑三世套房",
+    shortTitle: "拿三套房",
+    subtitle: "第二帝国室内装饰、接待空间和宫殿生活的强烈现场感。",
+    wing: "richelieu",
+    level: "Level 1",
+    roomRange: "544–548",
+    itemId: "louvre-napoleon-iii-apartments",
+    highlights: ["水晶吊灯", "红金装饰", "第二帝国审美"],
+    x: 228,
+    y: 48,
+    width: 78,
+    height: 24
+  },
+  {
+    id: "hall-richelieu-decorative-art",
+    title: "装饰艺术展区",
+    shortTitle: "装饰艺术",
+    subtitle: "家具、器物、珠宝与法国宫廷物质文化。",
+    wing: "richelieu",
+    level: "Level 1",
+    roomRange: "500–564",
+    itemId: "louvre-regent-diamond",
+    highlights: ["摄政王钻石", "家具", "金银器", "宫廷工艺"],
+    x: 228,
+    y: 76,
+    width: 78,
+    height: 18
   }
 ];
 
