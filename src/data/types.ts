@@ -14,6 +14,9 @@ export type Destination = {
   name: string;
   region: string;
   intro: string;
+  guideScript: string;
+  guideAudioUrl: string;
+  guideAudioDuration: string;
   accent: string;
 };
 

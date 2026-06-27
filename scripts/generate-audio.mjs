@@ -66,6 +66,29 @@ function readPoiAudioJobs() {
   return jobs;
 }
 
+function readDestinationAudioJobs() {
+  const source = readFileSync(dataPath, "utf8");
+  const jobs = [];
+  const entryPattern =
+    /{\s*slug:\s*"([^"]+)"[\s\S]*?name:\s*"([^"]+)"[\s\S]*?guideScript:\s*\n\s*"([^"]+)"[\s\S]*?guideAudioUrl:\s*"([^"]+)"/g;
+
+  for (const match of source.matchAll(entryPattern)) {
+    const [, slug, name, script, audioUrl] = match;
+    jobs.push({
+      id: `intro-${slug}`,
+      title: `${name}介绍`,
+      script,
+      output: join(root, "public", audioUrl.replace(/^\//, ""))
+    });
+  }
+
+  if (jobs.length !== 4) {
+    throw new Error(`Expected 4 destination audio jobs, found ${jobs.length}.`);
+  }
+
+  return jobs;
+}
+
 async function synthesize(bin, job) {
   const dir = await mkdtemp(join(tmpdir(), "yilu-tts-"));
   const textPath = join(dir, `${job.id}.txt`);
@@ -106,7 +129,7 @@ async function synthesize(bin, job) {
 }
 
 const bin = await findEdgeTtsBin();
-const jobs = readPoiAudioJobs();
+const jobs = [...readDestinationAudioJobs(), ...readPoiAudioJobs()];
 
 await mkdir(join(root, "public/audio"), { recursive: true });
 console.log(`Generating ${jobs.length} files with ${voice} at ${rate}`);

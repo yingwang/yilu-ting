@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
 import { PoiCard } from "@/components/PoiCard";
 import { destinations, getDestinationBySlug, getPoisByDestination } from "@/data/pois";
 
@@ -39,6 +40,33 @@ export default async function DestinationPage({
         <p className="mt-4 text-base leading-8 text-ink/65">{destination.intro}</p>
         <p className="mt-5 text-sm text-ink/55">{destinationPois.length} 个导览点</p>
       </section>
+
+      <section className="mt-6 space-y-4 rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-moss">
+            Destination intro
+          </p>
+          <h2 className="mt-2 text-xl font-semibold text-ink">城市介绍</h2>
+          <p className="mt-2 text-sm leading-7 text-ink/60">
+            先听这一站的整体气质，再进入下面的具体地点。
+          </p>
+        </div>
+
+        <AudioGuidePlayer
+          audioUrl={destination.guideAudioUrl}
+          title={`${destination.name}介绍`}
+          audioDuration={destination.guideAudioDuration}
+        />
+
+        <p className="whitespace-pre-line text-base leading-9 text-ink/75">
+          {destination.guideScript}
+        </p>
+      </section>
+
+      <div className="mt-7 px-1">
+        <h2 className="text-xl font-semibold text-ink">导览点</h2>
+        <p className="mt-1 text-sm text-ink/55">按旅程顺序听，每一站都可以单独打开。</p>
+      </div>
 
       <section className="mt-6 space-y-4">
         {destinationPois.map((poi) => (
