@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
-import { mkdir, rm, stat } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, stat, writeFile } from "node:fs/promises";
 import { readFileSync } from "node:fs";
-import { homedir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
 const root = process.cwd();
@@ -66,35 +66,43 @@ function readPoiAudioJobs() {
   return jobs;
 }
 
-function synthesize(bin, job) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(
-      bin,
-      [
-        "--voice",
-        voice,
-        `--rate=${rate}`,
-        "--text",
-        job.script,
-        "--write-media",
-        job.output
-      ],
-      { stdio: ["ignore", "pipe", "pipe"] }
-    );
+async function synthesize(bin, job) {
+  const dir = await mkdtemp(join(tmpdir(), "yilu-tts-"));
+  const textPath = join(dir, `${job.id}.txt`);
+  await writeFile(textPath, job.script, "utf8");
 
-    let stderr = "";
-    child.stderr.on("data", (chunk) => {
-      stderr += chunk.toString();
+  try {
+    await new Promise((resolve, reject) => {
+      const child = spawn(
+        bin,
+        [
+          "--voice",
+          voice,
+          `--rate=${rate}`,
+          "--file",
+          textPath,
+          "--write-media",
+          job.output
+        ],
+        { stdio: ["ignore", "pipe", "pipe"] }
+      );
+
+      let stderr = "";
+      child.stderr.on("data", (chunk) => {
+        stderr += chunk.toString();
+      });
+      child.on("error", reject);
+      child.on("close", (code) => {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`${job.id} failed with exit ${code}: ${stderr.slice(-800)}`));
+        }
+      });
     });
-    child.on("error", reject);
-    child.on("close", (code) => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`${job.id} failed with exit ${code}: ${stderr.slice(-800)}`));
-      }
-    });
-  });
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
 }
 
 const bin = await findEdgeTtsBin();
