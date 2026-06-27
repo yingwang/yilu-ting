@@ -6,6 +6,7 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const dataPath = join(root, "src/data/pois.ts");
+const guidePath = join(root, "src/data/spotGuide.ts");
 const voice = process.env.YILU_TTS_VOICE || "zh-CN-XiaoxiaoNeural";
 const rate = process.env.YILU_TTS_RATE || "-8%";
 const force = process.argv.includes("--force");
@@ -43,9 +44,154 @@ async function findEdgeTtsBin() {
   return "edge-tts";
 }
 
+function parseQuotedString(source, start) {
+  let index = start + 1;
+  let value = "";
+
+  while (index < source.length) {
+    const char = source[index];
+    if (char === "\\") {
+      value += char + source[index + 1];
+      index += 2;
+      continue;
+    }
+    if (char === "\"") {
+      return {
+        end: index + 1,
+        value: JSON.parse(`"${value}"`)
+      };
+    }
+    value += char;
+    index += 1;
+  }
+
+  throw new Error("Unterminated string in guide copy.");
+}
+
+function skipWhitespaceAndCommas(source, start) {
+  let index = start;
+  while (index < source.length && /[\s,]/.test(source[index])) {
+    index += 1;
+  }
+  return index;
+}
+
+function extractRecordBody(source, exportName) {
+  const marker = `export const ${exportName}`;
+  const markerIndex = source.indexOf(marker);
+  if (markerIndex === -1) {
+    throw new Error(`Could not find ${exportName}.`);
+  }
+
+  const openIndex = source.indexOf("{", markerIndex);
+  if (openIndex === -1) {
+    throw new Error(`Could not find ${exportName} body.`);
+  }
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let index = openIndex; index < source.length; index += 1) {
+    const char = source[index];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === "\"") {
+        inString = false;
+      }
+      continue;
+    }
+
+    if (char === "\"") {
+      inString = true;
+      continue;
+    }
+
+    if (char === "{") {
+      depth += 1;
+    } else if (char === "}") {
+      depth -= 1;
+      if (depth === 0) {
+        return source.slice(openIndex + 1, index);
+      }
+    }
+  }
+
+  throw new Error(`Could not parse ${exportName} body.`);
+}
+
+function parseStringArrayRecord(source) {
+  const record = new Map();
+  let index = 0;
+
+  while (index < source.length) {
+    index = skipWhitespaceAndCommas(source, index);
+    if (index >= source.length) {
+      break;
+    }
+
+    let key;
+    if (source[index] === "\"") {
+      const parsed = parseQuotedString(source, index);
+      key = parsed.value;
+      index = parsed.end;
+    } else {
+      const match = source.slice(index).match(/^([A-Za-z0-9_-]+)/);
+      if (!match) {
+        break;
+      }
+      key = match[1];
+      index += key.length;
+    }
+
+    index = skipWhitespaceAndCommas(source, index);
+    if (source[index] !== ":") {
+      throw new Error(`Expected ':' after ${key}.`);
+    }
+    index += 1;
+    index = skipWhitespaceAndCommas(source, index);
+    if (source[index] !== "[") {
+      throw new Error(`Expected string array for ${key}.`);
+    }
+
+    index += 1;
+    const paragraphs = [];
+    while (index < source.length) {
+      index = skipWhitespaceAndCommas(source, index);
+      if (source[index] === "]") {
+        index += 1;
+        break;
+      }
+      if (source[index] !== "\"") {
+        throw new Error(`Expected paragraph string for ${key}.`);
+      }
+      const parsed = parseQuotedString(source, index);
+      paragraphs.push(parsed.value);
+      index = parsed.end;
+    }
+
+    record.set(key, paragraphs.join("\n\n"));
+  }
+
+  return record;
+}
+
+function readGuideCopyOverrides() {
+  const source = readFileSync(guidePath, "utf8");
+  return {
+    destinations: parseStringArrayRecord(extractRecordBody(source, "destinationGuideCopy")),
+    pois: parseStringArrayRecord(extractRecordBody(source, "poiGuideCopy"))
+  };
+}
+
 function readPoiAudioJobs() {
   const source = readFileSync(dataPath, "utf8");
   const jobs = [];
+  const overrides = readGuideCopyOverrides().pois;
   const entryPattern =
     /{\s*id:\s*"([^"]+)"[\s\S]*?title:\s*"([^"]+)"[\s\S]*?script:\s*\n\s*"([^"]+)"[\s\S]*?audioUrl:\s*"([^"]+)"/g;
 
@@ -54,7 +200,7 @@ function readPoiAudioJobs() {
     jobs.push({
       id,
       title,
-      script,
+      script: overrides.get(id) || script,
       output: join(root, "public", audioUrl.replace(/^\//, ""))
     });
   }
@@ -69,6 +215,7 @@ function readPoiAudioJobs() {
 function readDestinationAudioJobs() {
   const source = readFileSync(dataPath, "utf8");
   const jobs = [];
+  const overrides = readGuideCopyOverrides().destinations;
   const entryPattern =
     /{\s*slug:\s*"([^"]+)"[\s\S]*?name:\s*"([^"]+)"[\s\S]*?guideScript:\s*\n\s*"([^"]+)"[\s\S]*?guideAudioUrl:\s*"([^"]+)"/g;
 
@@ -77,7 +224,7 @@ function readDestinationAudioJobs() {
     jobs.push({
       id: `intro-${slug}`,
       title: `${name}介绍`,
-      script,
+      script: overrides.get(slug) || script,
       output: join(root, "public", audioUrl.replace(/^\//, ""))
     });
   }

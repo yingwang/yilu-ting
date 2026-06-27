@@ -1,6 +1,6 @@
 # 一路听
 
-一个移动优先的中文旅行语音导览 MVP。它是浏览器里的 PWA，不是原生 App。第一版使用本地静态数据，包含汉堡、阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎的 34 个导览点。
+一个移动优先的中文景点语音导览 MVP。它是浏览器里的 PWA，不是原生 App。第一版使用本地静态数据，包含汉堡、阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎的 34 个导览点。
 
 ## 链接
 
@@ -10,7 +10,7 @@
 ## 功能
 
 - 目的地首页和目的地详情页
-- 34 个 POI 的中文导览词、自然导游补充、坐标、标签、时长、上一站和下一站
+- 34 个 POI 的中文导览词、自然导游补充、坐标、标签、上一段和下一段导览
 - 目的地页增加城市 / 区域导游词，参考 travel-book 的景点背景资料改写
 - 原生 HTML audio 播放器，先使用 `/audio/*.mp3` 占位路径
 - 音频文件缺失时显示友好提示，不会让页面崩掉
@@ -36,7 +36,7 @@ npm run build
 
 ## 音频接入
 
-导览音频使用 edge-tts 生成到 `public/audio/`，文件名和 `src/data/pois.ts` 里的 `audioUrl` 一一对应。例如：
+导览音频使用 edge-tts 生成到 `public/audio/`。文件名和 `src/data/pois.ts` 里的 `audioUrl` 一一对应，实际朗读文本优先使用 `src/data/spotGuide.ts` 里的新版自然导游词。例如：
 
 ```text
 public/audio/alsace-petite-france.mp3
@@ -58,7 +58,7 @@ YILU_TTS_VOICE=zh-CN-YunxiNeural YILU_TTS_RATE=-5% npm run generate:audio -- --f
 
 - TTS 和音频上传：保留 `audioUrl` 字段，当前音频先放在 `public/audio/`，以后也可以换成对象存储或 CDN 地址。
 - Supabase：当前进度逻辑都在 `src/lib/progress.ts`，以后要做跨设备同步时，把 localStorage 换成 Supabase 读写即可，组件不用跟着大改。
-- Stripe：第一版不做付费；以后如果要卖离线音频包或完整路线，可以在 POI 详情页的音频下载、离线包入口附近加 Stripe gating。
+- Stripe：第一版不做付费；以后如果要卖离线音频包或完整导览合集，可以在 POI 详情页的音频下载、离线包入口附近加 Stripe gating。
 - 地图：第一版只提供 Google Maps 跳转链接；以后如果要内嵌地图，可以直接用 POI 里的经纬度接 Mapbox、Google Maps 或 Apple Maps。
 
 ## 依赖审计

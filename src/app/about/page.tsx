@@ -33,19 +33,19 @@ export default function AboutPage() {
             <h2 className="font-semibold text-ink">先不做复杂地图</h2>
           </div>
           <p className="mt-3 text-sm leading-7 text-ink/65">
-            第一版只提供经纬度和 Google Maps 打开按钮。真正地图、离线包、导航和路线规划都可以以后再加，先把内容、播放和进度体验做顺。
+            第一版只提供经纬度和 Google Maps 打开按钮。更完整的地图、离线包和音频合集都可以以后再加，先把内容、播放和进度体验做顺。
           </p>
         </div>
 
         <div className="rounded-[0.5rem] border border-ink/10 bg-white/65 p-5">
           <div className="flex items-center gap-3">
             <span className="rounded-full bg-wine/10 p-2 text-wine">
-              <Sparkles size={20} aria-hidden="true" />
+            <Sparkles size={20} aria-hidden="true" />
             </span>
-            <h2 className="font-semibold text-ink">为这次欧洲行程定制</h2>
+            <h2 className="font-semibold text-ink">围绕欧洲城市与景点展开</h2>
           </div>
           <p className="mt-3 text-sm leading-7 text-ink/65">
-            目前内置汉堡、阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎五个目的地，共 34 个导览点。内容重点是景点介绍、历史背景和现场观看感，不展示私人行程细节。
+            目前内置汉堡、阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎五个目的地，共 34 个导览点。内容重点是景点介绍、历史背景和现场观看感，不展示私人计划细节。
           </p>
         </div>
       </section>

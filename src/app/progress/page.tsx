@@ -8,7 +8,7 @@ export default function ProgressPage() {
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Progress</p>
         <h1 className="mt-3 text-3xl font-semibold text-ink">听过的地方</h1>
         <p className="mt-3 text-base leading-8 text-ink/65">
-          进度只保存在当前浏览器的 localStorage 里，不需要登录，也不会上传到服务器。整趟旅程一共有 {pois.length} 个导览点。
+          进度只保存在当前浏览器的 localStorage 里，不需要登录，也不会上传到服务器。当前站点一共有 {pois.length} 个导览点。
         </p>
       </section>
 

@@ -6,12 +6,10 @@ import { withBasePath } from "@/lib/assetPath";
 
 export function AudioGuidePlayer({
   audioUrl,
-  title,
-  audioDuration
+  title
 }: {
   audioUrl: string;
   title: string;
-  audioDuration: string;
 }) {
   const [hasError, setHasError] = useState(false);
   const resolvedAudioUrl = withBasePath(audioUrl);
@@ -25,7 +23,7 @@ export function AudioGuidePlayer({
           </span>
           <div>
             <h2 className="font-semibold text-ink">语音导览</h2>
-            <p className="text-xs text-ink/55">{title} · {audioDuration}</p>
+            <p className="text-xs text-ink/55">{title}</p>
           </div>
         </div>
       </div>

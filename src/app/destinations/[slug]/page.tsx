@@ -23,6 +23,7 @@ export default async function DestinationPage({
 
   const destinationPois = getPoisByDestination(destination.slug);
   const guideCopy = getDestinationGuideCopy(destination.slug);
+  const guideParagraphs = guideCopy?.length ? guideCopy : [destination.guideScript];
 
   return (
     <div className="px-5 pb-10 pt-6 sm:px-8">
@@ -48,37 +49,29 @@ export default async function DestinationPage({
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-moss">
             Destination intro
           </p>
-          <h2 className="mt-2 text-xl font-semibold text-ink">城市介绍</h2>
+          <h2 className="mt-2 text-xl font-semibold text-ink">导览讲解</h2>
           <p className="mt-2 text-sm leading-7 text-ink/60">
-            先听这一站的整体气质，再进入下面的具体地点。
+            像导游开场一样，先把这一站的气质和观看重点讲清楚。
           </p>
         </div>
 
         <AudioGuidePlayer
           audioUrl={destination.guideAudioUrl}
           title={`${destination.name}介绍`}
-          audioDuration={destination.guideAudioDuration}
         />
 
-        <p className="whitespace-pre-line text-base leading-9 text-ink/75">
-          {destination.guideScript}
-        </p>
-
-        {guideCopy?.length ? (
-          <div className="space-y-4 border-t border-ink/10 pt-5">
-            <h3 className="text-base font-semibold text-ink">导游补充</h3>
-            {guideCopy.map((paragraph) => (
-              <p key={paragraph} className="text-base leading-9 text-ink/75">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        ) : null}
+        <div className="space-y-4">
+          {guideParagraphs.map((paragraph) => (
+            <p key={paragraph} className="whitespace-pre-line text-base leading-9 text-ink/75">
+              {paragraph}
+            </p>
+          ))}
+        </div>
       </section>
 
       <div className="mt-7 px-1">
-        <h2 className="text-xl font-semibold text-ink">导览点</h2>
-        <p className="mt-1 text-sm text-ink/55">按旅程顺序听，每一站都可以单独打开。</p>
+        <h2 className="text-xl font-semibold text-ink">继续听景点</h2>
+        <p className="mt-1 text-sm text-ink/55">每一处都可以单独打开，当成一段现场导游词来读或听。</p>
       </div>
 
       <section className="mt-6 space-y-4">

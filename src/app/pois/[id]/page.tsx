@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Clock3, ExternalLink, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, MapPin } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
 import { MarkListenedButton } from "@/components/MarkListenedButton";
 import { TagPill } from "@/components/TagPill";
@@ -32,6 +32,7 @@ export default async function PoiDetailPage({
   const previousPoi = getPreviousPoi(poi.id);
   const nextPoi = getNextPoi(poi.id);
   const guideCopy = getPoiGuideCopy(poi.id);
+  const guideParagraphs = guideCopy?.length ? guideCopy : [poi.script];
   // A real map view can replace this Google Maps deep link later without changing POI data.
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${poi.latitude},${poi.longitude}`;
 
@@ -61,10 +62,6 @@ export default async function PoiDetailPage({
 
           <div className="mt-5 grid gap-3 text-sm text-ink/60 sm:grid-cols-2">
             <div className="inline-flex items-center gap-2 rounded-[0.5rem] bg-paper px-3 py-2">
-              <Clock3 size={17} aria-hidden="true" />
-              建议停留 {poi.recommendedVisitDuration}
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-[0.5rem] bg-paper px-3 py-2">
               <MapPin size={17} aria-hidden="true" />
               {poi.locationName}
             </div>
@@ -74,33 +71,18 @@ export default async function PoiDetailPage({
         <AudioGuidePlayer
           audioUrl={poi.audioUrl}
           title={poi.title}
-          audioDuration={poi.audioDuration}
         />
 
-        {poi.summary ? (
-          <section className="rounded-[0.5rem] border border-brass/25 bg-brass/10 p-4">
-            <h2 className="text-sm font-semibold text-ink">短说明</h2>
-            <p className="mt-2 text-sm leading-7 text-ink/65">{poi.summary}</p>
-          </section>
-        ) : null}
-
         <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
-          <h2 className="text-lg font-semibold text-ink">中文导览词</h2>
-          <p className="mt-4 whitespace-pre-line text-base leading-9 text-ink/75">{poi.script}</p>
+          <h2 className="text-lg font-semibold text-ink">现场导览</h2>
+          <div className="mt-4 space-y-4">
+            {guideParagraphs.map((paragraph) => (
+              <p key={paragraph} className="whitespace-pre-line text-base leading-9 text-ink/75">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </section>
-
-        {guideCopy?.length ? (
-          <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
-            <h2 className="text-lg font-semibold text-ink">导游补充</h2>
-            <div className="mt-4 space-y-4">
-              {guideCopy.map((paragraph) => (
-                <p key={paragraph} className="text-base leading-9 text-ink/75">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </section>
-        ) : null}
 
         <div className="grid gap-3 sm:grid-cols-2">
           <MarkListenedButton poiId={poi.id} />
@@ -124,7 +106,7 @@ export default async function PoiDetailPage({
             >
               <p className="inline-flex items-center gap-1 text-xs font-medium text-ink/45">
                 <ArrowLeft size={14} aria-hidden="true" />
-                上一站
+                上一个导览
               </p>
               <p className="mt-2 font-semibold text-ink">{previousPoi.title}</p>
             </Link>
@@ -137,7 +119,7 @@ export default async function PoiDetailPage({
               className="rounded-[0.5rem] border border-ink/10 bg-white/65 p-4 text-right"
             >
               <p className="inline-flex items-center gap-1 text-xs font-medium text-ink/45">
-                下一站
+                下一个导览
                 <ArrowRight size={14} aria-hidden="true" />
               </p>
               <p className="mt-2 font-semibold text-ink">{nextPoi.title}</p>

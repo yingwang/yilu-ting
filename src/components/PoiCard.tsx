@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock3, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import type { Poi } from "@/data/types";
 import { ProgressBadge } from "./ProgressBadge";
 
@@ -22,10 +22,6 @@ export function PoiCard({ poi }: { poi: Poi }) {
         <span className="inline-flex items-center gap-1">
           <MapPin size={14} aria-hidden="true" />
           {poi.locationName}
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <Clock3 size={14} aria-hidden="true" />
-          {poi.recommendedVisitDuration}
         </span>
       </div>
       <Link

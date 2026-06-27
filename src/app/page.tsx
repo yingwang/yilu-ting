@@ -31,7 +31,7 @@ export default function HomePage() {
         <div className="mb-4 flex items-end justify-between gap-4 px-1">
           <div>
             <h2 className="text-xl font-semibold text-ink">选择目的地</h2>
-            <p className="mt-1 text-sm text-ink/55">先按旅程区域浏览，再进入每个点位听导览。</p>
+            <p className="mt-1 text-sm text-ink/55">先进入一个城市，再选择想听的景点导览。</p>
           </div>
         </div>
         <div className="space-y-4">
