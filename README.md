@@ -30,15 +30,27 @@ npm run build
 
 ## 音频接入
 
-真实 TTS 音频生成后，把 mp3 文件放到 `public/audio/`，文件名和 `src/data/pois.ts` 里的 `audioUrl` 对上即可。例如：
+当前 21 段导览音频已经用 edge-tts 生成到 `public/audio/`，文件名和 `src/data/pois.ts` 里的 `audioUrl` 一一对应。例如：
 
 ```text
 public/audio/alsace-petite-france.mp3
 ```
 
+重新生成音频：
+
+```bash
+npm run generate:audio -- --force
+```
+
+默认声音是 `zh-CN-XiaoxiaoNeural`，语速是 `-8%`。如果以后想换声音或语速，可以这样运行：
+
+```bash
+YILU_TTS_VOICE=zh-CN-YunxiNeural YILU_TTS_RATE=-5% npm run generate:audio -- --force
+```
+
 ## 后续接入位置
 
-- TTS 和音频上传：保留 `audioUrl` 字段，生成后的音频可以先传到 `public/audio/`，以后也可以换成对象存储或 CDN 地址。
+- TTS 和音频上传：保留 `audioUrl` 字段，当前音频先放在 `public/audio/`，以后也可以换成对象存储或 CDN 地址。
 - Supabase：当前进度逻辑都在 `src/lib/progress.ts`，以后要做跨设备同步时，把 localStorage 换成 Supabase 读写即可，组件不用跟着大改。
 - Stripe：第一版不做付费；以后如果要卖离线音频包或完整路线，可以在 POI 详情页的音频下载、离线包入口附近加 Stripe gating。
 - 地图：第一版只提供 Google Maps 跳转链接；以后如果要内嵌地图，可以直接用 POI 里的经纬度接 Mapbox、Google Maps 或 Apple Maps。
