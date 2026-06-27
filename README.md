@@ -2,6 +2,11 @@
 
 一个移动优先的中文旅行语音导览 MVP。它是浏览器里的 PWA，不是原生 App。第一版使用本地静态数据，包含阿尔萨斯、因特拉肯与伯尔尼高地、蒙特勒湖区和巴黎的 21 个导览点。
 
+## 链接
+
+- GitHub: <https://github.com/yingwang/yilu-ting>
+- 在线 Demo: <https://yingwang.github.io/yilu-ting/>
+
 ## 功能
 
 - 目的地首页和目的地详情页
