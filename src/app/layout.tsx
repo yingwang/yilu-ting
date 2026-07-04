@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { BottomNav } from "@/components/BottomNav";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import { withBasePath } from "@/lib/assetPath";
 
 export const metadata: Metadata = {
@@ -8,8 +9,12 @@ export const metadata: Metadata = {
   description: "你的中文旅行语音导览",
   manifest: withBasePath("/manifest.webmanifest"),
   icons: {
-    icon: withBasePath("/icon.svg"),
-    apple: withBasePath("/icon.svg")
+    icon: [
+      { url: withBasePath("/icon.svg"), type: "image/svg+xml" },
+      { url: withBasePath("/icon-192.png"), sizes: "192x192", type: "image/png" },
+      { url: withBasePath("/icon-512.png"), sizes: "512x512", type: "image/png" }
+    ],
+    apple: withBasePath("/apple-touch-icon.png")
   },
   appleWebApp: {
     capable: true,
@@ -37,6 +42,7 @@ export default function RootLayout({
           <main className="safe-bottom min-h-screen">{children}</main>
           <BottomNav />
         </div>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

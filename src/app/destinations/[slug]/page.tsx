@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Map } from "lucide-react";
 import { AudioGuidePlayer } from "@/components/AudioGuidePlayer";
+import { OfflineDownloadButton } from "@/components/OfflineDownloadButton";
 import { PoiCard } from "@/components/PoiCard";
 import { destinations, getDestinationBySlug, getPoisByDestination } from "@/data/pois";
 import { getDestinationGuideCopy } from "@/data/spotGuide";
@@ -44,6 +45,10 @@ export default async function DestinationPage({
         <p className="mt-5 text-sm text-ink/55">{destinationPois.length} 个导览点</p>
       </section>
 
+      <div className="mt-6">
+        <OfflineDownloadButton slug={destination.slug} destinationName={destination.name} />
+      </div>
+
       <section className="mt-6 space-y-4 rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-moss">
@@ -58,6 +63,7 @@ export default async function DestinationPage({
         <AudioGuidePlayer
           audioUrl={destination.guideAudioUrl}
           title={`${destination.name}介绍`}
+          album={destination.name}
         />
 
         <div className="space-y-4">

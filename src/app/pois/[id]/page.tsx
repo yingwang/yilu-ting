@@ -71,6 +71,11 @@ export default async function PoiDetailPage({
         <AudioGuidePlayer
           audioUrl={poi.audioUrl}
           title={poi.title}
+          album={poi.destination}
+          prevHref={previousPoi ? `/pois/${previousPoi.id}` : undefined}
+          prevTitle={previousPoi?.title}
+          nextHref={nextPoi ? `/pois/${nextPoi.id}` : undefined}
+          nextTitle={nextPoi?.title}
         />
 
         <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">

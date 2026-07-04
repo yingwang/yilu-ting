@@ -117,6 +117,26 @@ export const pois: Poi[] = [
     summary: "从桥边看河道和木筋屋，理解这片老城原本的工匠气息。",
     audioUrl: "/audio/alsace-petite-france.mp3",
     tags: ["木筋屋", "老城", "河道"],
+    nextPoiId: "alsace-barrage-vauban"
+  },
+  {
+    id: "alsace-barrage-vauban",
+    destinationSlug: "alsace",
+    destination: "阿尔萨斯",
+    region: "Alsace",
+    title: "Barrage Vauban",
+    subtitle: "十七世纪拦河坝顶的斯特拉斯堡全景平台",
+    locationName: "Barrage Vauban, Strasbourg",
+    latitude: 48.5793,
+    longitude: 7.7407,
+    category: "river",
+    recommendedVisitDuration: "30-45 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "沃邦拦河坝就在小法兰西的下游一点，是一道横跨伊尔河的石砌建筑。很多人第一眼会以为它只是一座桥，其实它是十七世纪的军事水利工程。设计它的沃邦是路易十四时期最重要的筑城工程师，他的想法很直接：一旦城市受到进攻，就用这道坝把上游的水拦起来，让南面这一片低地被水淹没，形成一道天然的防线。今天战争的功能早已消失，但这道厚重的石拱结构留了下来，还多了一个很好的用处，屋顶被改造成一个免费的全景平台。你从内部的石廊走上去，会看到斯特拉斯堡最经典的一幅画面在眼前展开：前面是并排的廊桥和几座方形的中世纪塔楼，再往后是小法兰西层层叠叠的屋顶，天气好的时候，大教堂的尖塔也会出现在最远处。站在这里，你能一下子看懂这座城市和水的关系：水既是它的生计，也曾经是它的防御，如今又成了它最上镜的前景。先上来看一眼，再下去走小法兰西，会比一头扎进人群里更明白自己在看什么。",
+    summary: "从坝顶平台俯看廊桥、塔楼和小法兰西，看懂城市与水的关系。",
+    audioUrl: "/audio/alsace-barrage-vauban.mp3",
+    tags: ["观景平台", "沃邦", "廊桥"],
     nextPoiId: "alsace-strasbourg-cathedral"
   },
   {
@@ -157,6 +177,26 @@ export const pois: Poi[] = [
     summary: "沿河慢走，看桥、房子和水面怎样把老城串起来。",
     audioUrl: "/audio/alsace-ill-river-walk.mp3",
     tags: ["散步", "河岸", "老城边界"],
+    nextPoiId: "alsace-neustadt"
+  },
+  {
+    id: "alsace-neustadt",
+    destinationSlug: "alsace",
+    destination: "阿尔萨斯",
+    region: "Alsace",
+    title: "Strasbourg Neustadt",
+    subtitle: "德占时期规划的威廉时代大道与广场",
+    locationName: "Neustadt, Strasbourg",
+    latitude: 48.5896,
+    longitude: 7.7649,
+    category: "city walk",
+    recommendedVisitDuration: "45-75 分钟",
+    audioDuration: "1-2 分钟",
+    script:
+      "新城，也就是 Neustadt，是斯特拉斯堡另一张不太一样的面孔。老城是中世纪留下来的木筋屋和弯曲街巷，而新城是一整片十九世纪末规划出来的德式城区。它的来历很清楚：一八七一年普法战争之后，阿尔萨斯被并入德意志帝国，柏林方面想把斯特拉斯堡建成帝国西部的一座样板城市，于是在老城外围开辟了这片新城，笔直的大道、开阔的广场、成排的威廉时代建筑，处处透着那个时期德国的国家意志。你可以先到共和国广场看一圈，四周环绕着当年的皇宫、图书馆和政府建筑，体量庞大，风格厚重，和小法兰西那种亲切的尺度完全相反。走在新城的林荫大道上，你会注意到房子更高、街道更宽、装饰更讲究对称和纪念性。有意思的是，这片德式新城如今和中世纪老城一起被列入了世界遗产，因为它非常完整地保留了一座欧洲城市在两种政治力量之间被反复书写的痕迹。看新城，其实是在读阿尔萨斯那段被法国和德国轮流塑造的历史：同一座城市，前后脚盖出了两种完全不同的城市理想。",
+    summary: "在笔直大道和共和国广场之间，读斯特拉斯堡被两种力量书写的历史。",
+    audioUrl: "/audio/alsace-neustadt.mp3",
+    tags: ["德式新城", "世界遗产", "威廉时代"],
     nextPoiId: "alsace-colmar-little-venice"
   },
   {
@@ -237,6 +277,26 @@ export const pois: Poi[] = [
     summary: "看冰川湖的蓝绿色，以及山和湖岸之间的开阔关系。",
     audioUrl: "/audio/interlaken-lake-brienz.mp3",
     tags: ["冰川湖", "蓝绿色", "山景"],
+    nextPoiId: "interlaken-harder-kulm"
+  },
+  {
+    id: "interlaken-harder-kulm",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Harder Kulm",
+    subtitle: "从山顶观景台俯看两湖之间的因特拉肯",
+    locationName: "Harder Kulm, Interlaken",
+    latitude: 46.6975,
+    longitude: 7.8577,
+    category: "mountain",
+    recommendedVisitDuration: "1.5-2.5 小时",
+    audioDuration: "1-2 分钟",
+    script:
+      "哈德库尔姆是因特拉肯正后方那座山顶的观景台，海拔一千三百多米。你从镇上坐一段很陡的登山缆车上来，几分钟里窗外的房子和街道就迅速缩小，等到了山顶，因特拉肯这个名字的意思一下子变得清楚：这座小城之所以叫两湖之间，是因为它正好卡在图恩湖和布里恩茨湖中间那条狭窄的河谷平原上。你站在伸出崖壁的观景平台上往下看，左边一片湖偏绿，右边一片湖偏蓝，中间是被河道和铁路串起来的市镇，再往远处，少女峰、僧侣峰和艾格峰一带的雪线像一道白色屏风压在绿色山谷后面。这里最好的时间是傍晚，太阳往西沉的时候，两片湖会先后暗下来，雪峰却还留着最后一点光。你不用急着拍完就走，可以在平台上多待一会儿，看这座被水和山共同定义的小城怎样一点点进入夜色。看哈德库尔姆，其实是在一个高处，把接下来几天要走的湖、谷和雪峰先完整地看一遍。",
+    summary: "坐登山缆车上山顶，一次看清两湖夹一城的地形。",
+    audioUrl: "/audio/interlaken-harder-kulm.mp3",
+    tags: ["观景台", "登山缆车", "两湖"],
     nextPoiId: "interlaken-brienz"
   },
   {
@@ -337,6 +397,26 @@ export const pois: Poi[] = [
     summary: "从齿轨铁路、草甸和艾格峰北壁理解伯尔尼高地的高山尺度。",
     audioUrl: "/audio/interlaken-kleine-scheidegg.mp3",
     tags: ["艾格峰", "齿轨铁路", "高山垭口"],
+    nextPoiId: "interlaken-grindelwald"
+  },
+  {
+    id: "interlaken-grindelwald",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Grindelwald",
+    subtitle: "艾格峰北壁下的少女峰地区门户山村",
+    locationName: "Grindelwald, Bernese Oberland",
+    latitude: 46.6242,
+    longitude: 8.0342,
+    category: "mountain",
+    recommendedVisitDuration: "半天",
+    audioDuration: "1-2 分钟",
+    script:
+      "格林德尔瓦尔德是少女峰地区最重要的山村，也是你这一天进山的枢纽。它坐在一个被群山围成的碗状山谷里，抬头正对着艾格峰那面著名的北壁：一整片近乎垂直的深色岩墙，光线不同时颜色也不同，是阿尔卑斯登山史上最有名也最凶险的一面墙。村子本身是很典型的伯尔尼高地样子，木屋沿着坡地散开，草坡上偶尔传来牛铃声，教堂尖顶插在绿色和灰白的岩壁之间。从这里出发，你可以坐齿轨火车或缆车往上，到克莱内谢德格换车去少女峰，也可以往另一侧上到菲斯特看高山步道。格林德尔瓦尔德最值得体会的，不是某一个单独的点，而是它作为门户的那种垂直感：你站在村里，脚下是绿色的牧场和木屋，一抬眼却是灰黑的岩壁和更高处的雪，短短一道视线里就把瑞士山地的几个高度叠在了一起。走的时候可以多留意脚下和头顶的落差，正是这种落差，让接下来往上爬的每一段路都显得有意义。",
+    summary: "在碗状山谷里仰看艾格峰北壁，理解进山枢纽的垂直感。",
+    audioUrl: "/audio/interlaken-grindelwald.mp3",
+    tags: ["山村", "艾格峰北壁", "进山枢纽"],
     nextPoiId: "interlaken-wengen-railway"
   },
   {
@@ -397,6 +477,26 @@ export const pois: Poi[] = [
     summary: "从水底沉木、鱼和树影看一处低处、近距离的瑞士蓝湖。",
     audioUrl: "/audio/interlaken-blausee.mp3",
     tags: ["蓝湖", "森林", "清水"],
+    nextPoiId: "interlaken-spiez"
+  },
+  {
+    id: "interlaken-spiez",
+    destinationSlug: "interlaken",
+    destination: "因特拉肯与伯尔尼高地",
+    region: "Interlaken / Bernese Oberland",
+    title: "Spiez",
+    subtitle: "图恩湖畔的城堡、湖湾与朝南葡萄坡",
+    locationName: "Spiez, Lake Thun",
+    latitude: 46.6858,
+    longitude: 7.6796,
+    category: "castle",
+    recommendedVisitDuration: "2-3 小时",
+    audioDuration: "1-2 分钟",
+    script:
+      "施皮茨是图恩湖西南岸一座安静的小镇，最出名的是它那个几乎完美的湖湾。你从火车站往湖边走，会先在高处看到全景：一道弧形的湾把湖水圈进来，湾口一座中世纪城堡连着一座罗曼式教堂，几乎是踩着水建的，城堡背后的山坡上是一片朝南的葡萄园。这个组合之所以好看，是因为它把瑞士湖区的几样东西刚好放进了同一个画面：平静的湖面、伸进水里的石头城堡、爬满坡地的葡萄藤，还有远处图恩湖对岸的山。施皮茨城堡本身很老，塔楼可以上去，从上面往下看，湾里的帆船和游船像被摆好的小模型。这里的葡萄坡朝南，日照足，产的白葡萄酒在本地很有名，说明这一带虽然身处山区，却有一小片相对温暖的微气候。看施皮茨不必赶，你可以沿湾边走一圈，从不同角度看城堡和湖怎样互相成全，也可以在码头等一班图恩湖的船，从水上回头再看这座小镇一次。",
+    summary: "从高处看城堡、湖湾和葡萄园如何在一个画面里彼此成全。",
+    audioUrl: "/audio/interlaken-spiez.mp3",
+    tags: ["湖湾", "城堡", "葡萄坡"],
     nextPoiId: "interlaken-oeschinensee"
   },
   {
@@ -657,6 +757,26 @@ export const pois: Poi[] = [
     summary: "从花园、水面和植物层次理解莫奈晚年绘画的现场来源。",
     audioUrl: "/audio/paris-giverny-monet.mp3",
     tags: ["莫奈", "花园", "印象派"],
+    nextPoiId: "paris-marmottan-monet"
+  },
+  {
+    id: "paris-marmottan-monet",
+    destinationSlug: "paris",
+    destination: "巴黎",
+    region: "Paris",
+    title: "Marmottan Monet",
+    subtitle: "全球最大莫奈收藏，藏有《日出·印象》",
+    locationName: "Musée Marmottan Monet, Paris 16e",
+    latitude: 48.8596,
+    longitude: 2.2668,
+    category: "museum",
+    recommendedVisitDuration: "1.5-2 小时",
+    audioDuration: "1-2 分钟",
+    script:
+      "马摩丹莫奈博物馆在巴黎西边十六区的安静住宅区里，由一座十九世纪的私人宅邸改造而来，气氛和卢浮宫、奥赛那种大馆完全不同。它最重要的身份，是全世界最大的莫奈收藏所在地。这里有一件必须专门去看的画，《日出·印象》。一八七四年，正是因为这幅画标题里的印象两个字，一位批评家带着嘲讽把这群画家称作印象派，没想到这个原本讥讽的名字后来成了整个运动的名称。所以你站在这幅并不算大的画前，看的其实是一个流派得名的那一刻。除了它，馆里还集中收藏了莫奈晚年的作品，尤其是他在吉维尼画的睡莲、垂柳和晨昏光线，画面越到后期越松、越接近抽象，你能清楚看到一位画家如何用一生去追一片水面上的光。地下的睡莲展厅光线压得很低，很适合坐下来慢慢看。这里的游客通常没有大馆那么多，如果你之前去过吉维尼的花园，再到这里看他把那座花园画成了什么样子，两处会互相解释。博物馆周一闭馆，最好赶第一场进去，趁人少的时候，先到《日出·印象》前站一会儿。",
+    summary: "在安静的宅邸博物馆里，站到印象派得名那幅画前。",
+    audioUrl: "/audio/paris-marmottan-monet.mp3",
+    tags: ["莫奈", "印象派", "宅邸博物馆"],
     nextPoiId: "paris-bon-marche-rodin"
   },
   {

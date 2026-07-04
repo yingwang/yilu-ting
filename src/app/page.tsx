@@ -20,7 +20,7 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-xl font-semibold text-ink">PWA</p>
-            <p className="mt-1 text-xs text-ink/50">浏览器使用</p>
+            <p className="mt-1 text-xs text-ink/50">可离线收听</p>
           </div>
         </div>
       </section>

@@ -50,7 +50,7 @@ export default async function LouvreGuideItemPage({
           </div>
         </header>
 
-        <AudioGuidePlayer audioUrl={`/audio/${item.id}.mp3`} title={item.title} />
+        <AudioGuidePlayer audioUrl={`/audio/${item.id}.mp3`} title={item.title} album="卢浮宫" />
 
         <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
           <h2 className="text-lg font-semibold text-ink">现场导览</h2>
