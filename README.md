@@ -74,3 +74,11 @@ YILU_TTS_VOICE=zh-CN-YunxiNeural YILU_TTS_RATE=-5% npm run generate:audio -- --f
 ## 依赖审计
 
 当前 `npm audit --omit=dev` 会报告 Next.js 间接依赖的 PostCSS advisory。npm 给出的自动修复需要 `--force`，而且会把 Next 降到旧版本，所以这里没有执行破坏性修复。后续等 Next 稳定版本更新后，再升级即可。
+
+## 授权
+
+这个仓库里几类材料适用不同的授权，完整说明见 [CREDITS.md](CREDITS.md)：
+
+- 代码(Next.js/TypeScript、service worker、脚本)：[MIT](LICENSE)。
+- 导览词(`src/data/` 下的 `pois.ts`、`spotGuide.ts` 等)：原创，[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)。
+- 导览音频(`public/audio/`)：由微软 edge-tts 神经语音合成，受 Azure 语音相关条款约束，此处仅作个人非商业用途分发；二次利用请自行重新生成并核对条款。
