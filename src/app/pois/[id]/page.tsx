@@ -12,6 +12,7 @@ import {
   pois
 } from "@/data/pois";
 import { getPoiGuideCopy } from "@/data/spotGuide";
+import { getPoiWorks } from "@/data/poiWorks";
 
 export function generateStaticParams() {
   return pois.map((poi) => ({ id: poi.id }));
@@ -33,6 +34,7 @@ export default async function PoiDetailPage({
   const nextPoi = getNextPoi(poi.id);
   const guideCopy = getPoiGuideCopy(poi.id);
   const guideParagraphs = guideCopy?.length ? guideCopy : [poi.script];
+  const works = getPoiWorks(poi.id);
   // A real map view can replace this Google Maps deep link later without changing POI data.
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${poi.latitude},${poi.longitude}`;
 
@@ -88,6 +90,52 @@ export default async function PoiDetailPage({
             ))}
           </div>
         </section>
+
+        {works.length > 0 ? (
+          <section className="rounded-[0.5rem] border border-ink/10 bg-white/75 p-5 shadow-sm">
+            <h2 className="text-lg font-semibold text-ink">作品讲解</h2>
+            <p className="mt-2 text-sm leading-7 text-ink/60">
+              馆里最值得逐幅细看的作品，每一件都配了单独的语音讲解，适合站在画前一件件听。
+            </p>
+            <div className="mt-4 space-y-4">
+              {works.map((work) => (
+                <article
+                  key={work.id}
+                  className="rounded-[0.5rem] border border-ink/10 bg-paper/60 p-4"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-moss">
+                    {work.artist} · {work.dateLabel}
+                  </p>
+                  <h3 className="mt-1.5 text-xl font-semibold leading-snug text-ink">
+                    {work.title}
+                  </h3>
+                  {work.titleOriginal ? (
+                    <p className="mt-0.5 text-xs italic text-ink/45">{work.titleOriginal}</p>
+                  ) : null}
+                  <p className="mt-2 text-sm leading-6 text-ink/60">{work.subtitle}</p>
+
+                  <div className="mt-3">
+                    <AudioGuidePlayer
+                      audioUrl={`/audio/${work.id}.mp3`}
+                      title={work.title}
+                      album={poi.title}
+                    />
+                  </div>
+
+                  <p className="mt-3 whitespace-pre-line text-base leading-8 text-ink/75">
+                    {work.script}
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {work.tags.map((tag) => (
+                      <TagPill key={tag} label={tag} />
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <div className="grid gap-3 sm:grid-cols-2">
           <MarkListenedButton poiId={poi.id} />

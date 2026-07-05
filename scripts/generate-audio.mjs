@@ -9,6 +9,7 @@ const dataPath = join(root, "src/data/pois.ts");
 const guidePath = join(root, "src/data/spotGuide.ts");
 const louvreGuidePath = join(root, "src/data/louvreGuide.ts");
 const louvreGuideExtraPath = join(root, "src/data/louvreGuideExtra.ts");
+const poiWorksPath = join(root, "src/data/poiWorks.ts");
 const voice = process.env.YILU_TTS_VOICE || "zh-CN-XiaoxiaoNeural";
 const rate = process.env.YILU_TTS_RATE || "-8%";
 const force = process.argv.includes("--force");
@@ -308,6 +309,30 @@ function readLouvreAudioJobs() {
   return jobs;
 }
 
+function readPoiWorksAudioJobs() {
+  if (!existsSync(poiWorksPath)) {
+    return [];
+  }
+
+  const source = readFileSync(poiWorksPath, "utf8");
+  const jobs = [];
+  // 每件作品对象里字段顺序为 id -> title -> ... -> script；\bid: 不会误匹配前面的 poiId。
+  const entryPattern =
+    /\bid:\s*"([^"]+)"[\s\S]*?title:\s*"([^"]+)"[\s\S]*?script:\s*\n\s*"([^"]+)"/g;
+
+  for (const match of source.matchAll(entryPattern)) {
+    const [, id, title, script] = match;
+    jobs.push({
+      id,
+      title,
+      script,
+      output: join(root, "public", "audio", `${id}.mp3`)
+    });
+  }
+
+  return jobs;
+}
+
 async function synthesize(bin, job) {
   const dir = await mkdtemp(join(tmpdir(), "yilu-tts-"));
   const textPath = join(dir, `${job.id}.txt`);
@@ -348,7 +373,12 @@ async function synthesize(bin, job) {
 }
 
 const bin = await findEdgeTtsBin();
-const jobs = [...readDestinationAudioJobs(), ...readPoiAudioJobs(), ...readLouvreAudioJobs()];
+const jobs = [
+  ...readDestinationAudioJobs(),
+  ...readPoiAudioJobs(),
+  ...readLouvreAudioJobs(),
+  ...readPoiWorksAudioJobs()
+];
 
 await mkdir(join(root, "public/audio"), { recursive: true });
 console.log(`Generating ${jobs.length} files with ${voice} at ${rate}`);
