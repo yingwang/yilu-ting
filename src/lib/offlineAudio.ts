@@ -1,5 +1,6 @@
 import { destinations, getPoisByDestination } from "@/data/pois";
 import { allLouvreGuidePois } from "@/data/louvreGuide";
+import { getPoiWorks } from "@/data/poiWorks";
 import { withBasePath } from "@/lib/assetPath";
 
 // 与 public/sw.js 里的音频缓存名保持一致。更新外壳时不清这个缓存。
@@ -13,7 +14,7 @@ export function isOfflineAudioSupported() {
   );
 }
 
-// 某个目的地离线要存的全部音频地址（含目的地介绍与每个导览点）。
+// 某个目的地离线要存的全部音频地址（含目的地介绍、每个导览点与单馆作品讲解）。
 // 巴黎额外带上卢浮宫整套解说，这样「存巴黎到手机」一次把馆内音频也备齐。
 export function getDestinationAudioUrls(slug: string): string[] {
   const urls = new Set<string>();
@@ -24,6 +25,9 @@ export function getDestinationAudioUrls(slug: string): string[] {
 
   for (const poi of getPoisByDestination(slug)) {
     if (poi.audioUrl) urls.add(withBasePath(poi.audioUrl));
+    for (const work of getPoiWorks(poi.id)) {
+      urls.add(withBasePath(`/audio/${work.id}.mp3`));
+    }
   }
 
   if (slug === "paris") {
