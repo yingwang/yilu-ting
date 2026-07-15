@@ -157,8 +157,8 @@ async function handleRscData(request, url) {
   } catch {
     const cached = await cache.match(cacheKey);
     if (cached) return cached.clone();
-    // 离线且没缓存：交回网络报错，Next 会自动退回整页导航，由下面的页面缓存兜底。
-    return fetch(request);
+    // 离线且没缓存：立即报网络错误（不再重试拖时间），Next 会退回整页导航，由页面缓存兜底。
+    return Response.error();
   }
 }
 
